@@ -2,7 +2,6 @@
 #include <fstream>
 #include <vector>
 
-#include <Windows.h>
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -20,14 +19,17 @@ int main(int argc, char** argv) {
         }
 
         std::ifstream font_file("Assets/Fonts/Inconsolata/Inconsolata.otf");
-        std::cout << font_file.is_open() << std::endl;
 
+        if(!font_file.is_open()) {
+            std::cout << "Failed to load font file." << std::endl;
+            return -1;
+        }
         font_file.seekg(0, std::ios_base::end);
         std::size_t font_size = font_file.tellg();
         font_file.seekg(0, std::ios_base::beg);
-        std::vector<char> data(font_size);
-        font_file.read(data.data(), font_size);
         std::cout << font_size << std::endl;
+        std::vector<char> data(font_size+1);
+        font_file.read(data.data(), font_size);
 
         //Put drawing stuff here
         sf::Font font;
@@ -35,9 +37,7 @@ int main(int argc, char** argv) {
         std::cout << my_font << std::endl;
         sf::Text message("Hello Glimmer", font);
 
-        char x[100];
-        GetCurrentDirectoryA(100, x);
-        std::cout << x << std::endl;
+        w.close();
     }
     return 0;
 }
