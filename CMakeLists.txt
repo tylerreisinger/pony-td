@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(pony_td)
 
+set(CMAKE_MODULE_PATH "cmake_modules" ${CMAKE_MODULE_PATH})
+
 add_executable(pony_td src/main.cpp)
 
 find_package(SFML 2 REQUIRED network audio graphics window system)
