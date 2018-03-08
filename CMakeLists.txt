@@ -3,7 +3,9 @@ project(pony_td)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
-add_executable(pony_td src/main.cpp)
+add_subdirectory("src")
+
+add_executable(pony_td ${SOURCES})
 
 set_target_properties(pony_td PROPERTIES
     CXX_STANDARD 14
