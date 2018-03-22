@@ -1,10 +1,12 @@
 set(SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/game.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/GameClock.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/GameTime.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 PARENT_SCOPE)
 
 set(HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/game.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/GameClock.h
         ${CMAKE_CURRENT_SOURCE_DIR}/GameTime.h
 PARENT_SCOPE)
