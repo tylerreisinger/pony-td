@@ -1,29 +1,42 @@
 #include "game.h"
 
+#include <ratio>
+
 Game::Game() {}
 
 void Game::run(sf::VideoMode window_mode) {
+    using namespace std::chrono_literals;
     initialize(window_mode);
 
-
-    std::vector<char> chars = load_font_data(file_path);
-    sf::Font font = create_font_from_data(chars);
+    auto time_step = 33.3ms;
 
     while(m_window.isOpen()) {
+        GameTime frame_time = m_game_clock.tick(time_step);
+
         event_loop();
 
-        m_window.clear();
+        update(frame_time);
 
-        m_window.draw(make_message("Glimmer is the best pone", font));
+        draw(frame_time);
 
-        m_window.display();
+        auto frame_length = std::chrono::high_resolution_clock::now() -
+                frame_time.get_frame_start_time();
+        auto sleep_duration = time_step - frame_length;
+
+        if(sleep_duration > decltype(frame_length)::zero()) {
+            std::this_thread::sleep_for(sleep_duration);
+        }
     }
 }
 
 void Game::create_window(sf::VideoMode window_mode) {
     m_window.create(window_mode, "Starlight Glimmer");
 }
-void Game::initialize(sf::VideoMode window_mode) { create_window(window_mode); }
+void Game::initialize(sf::VideoMode window_mode) {
+    create_window(window_mode);
+    std::vector<char> chars = load_font_data(file_path);
+    m_font = create_font_from_data(chars);
+}
 
 void Game::event_loop() {
     sf::Event evt;
@@ -65,4 +78,14 @@ void Game::check_font_file_path(std::ifstream& font_file) {
         std::cerr << "Failed to load font file." << std::endl;
         throw std::runtime_error("Font file not found.");
     }
+}
+
+void Game::update(const GameTime& time) {}
+
+void Game::draw(const GameTime& time) {
+    m_window.clear();
+
+    m_window.draw(make_message("Glimmer is the best pone", m_font));
+
+    m_window.display();
 }
