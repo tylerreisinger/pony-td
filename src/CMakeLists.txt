@@ -3,10 +3,22 @@ set(SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/GameClock.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/GameTime.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTile.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/MapTile.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/TileGraphic.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/TileSet.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/World.cpp
 PARENT_SCOPE)
 
 set(HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/game.h
         ${CMAKE_CURRENT_SOURCE_DIR}/GameClock.h
         ${CMAKE_CURRENT_SOURCE_DIR}/GameTime.h
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTile.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/MapTile.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/TileGraphic.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/TileSet.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/World.h
 PARENT_SCOPE)

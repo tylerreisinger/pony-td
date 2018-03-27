@@ -1,3 +1,6 @@
+#ifndef GAMETIME_H_
+#define GAMETIME_H_
+
 #include <chrono>
 
 class GameTime {
@@ -37,3 +40,5 @@ private:
     Clock::time_point m_frame_start_time;
     Clock::time_point m_game_start_time;
 };
+
+#endif
