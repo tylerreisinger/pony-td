@@ -11,7 +11,7 @@ public:
     ~TileSet() = default;
 
     TileSet(const TileSet& other) = delete;
-    TileSet(TileSet&& other) noexcept = delete;
+    TileSet(TileSet&& other) noexcept = default;
     TileSet& operator=(const TileSet& other) = delete;
     TileSet& operator=(TileSet&& other) noexcept = delete;
 
