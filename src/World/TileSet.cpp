@@ -1,5 +1,8 @@
 #include "TileSet.h"
 
+TileSet::TileSet(int tile_width, int tile_height)
+    : m_tile_width(tile_width), m_tile_height(tile_height) {}
+
 const TileGraphic& TileSet::graphic_for_tile(int id) const {
     auto graphic_iter = m_tile_graphics.find(id);
     if(graphic_iter == m_tile_graphics.end()) {

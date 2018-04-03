@@ -7,7 +7,7 @@
 
 class World {
 public:
-    World() = default;
+    World(int width, int height, const MapTile& default_tile);
     ~World() = default;
 
     World(const World& other) = delete;
@@ -16,7 +16,8 @@ public:
     World& operator=(World&& other) noexcept = delete;
     int width() const;
     int height() const;
-
+    const std::vector<MapTile>& tiles() const;
+    const MapTile& tile(int x, int y) const;
     void set_tile(int x, int y, MapTile tile);
 
 protected:

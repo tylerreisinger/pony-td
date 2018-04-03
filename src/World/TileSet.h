@@ -7,7 +7,7 @@
 
 class TileSet {
 public:
-    TileSet() = delete;
+    TileSet(int tile_width, int tile_height);
     ~TileSet() = default;
 
     TileSet(const TileSet& other) = delete;
@@ -18,8 +18,14 @@ public:
     const TileGraphic& graphic_for_tile(int id) const;
     void set_tile_graphic(int id, TileGraphic tile_graphic);
 
+    int tile_width() const { return m_tile_width; };
+    int tile_height() const { return m_tile_height; };
+
 private:
     std::unordered_map<int, TileGraphic> m_tile_graphics;
+
+    int m_tile_width;
+    int m_tile_height;
 };
 
 #endif

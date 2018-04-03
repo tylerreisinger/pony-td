@@ -4,17 +4,18 @@
 
 class FloorTile {
 public:
-    FloorTile() = delete;
+    FloorTile(int tile_id);
     ~FloorTile() = default;
 
-    FloorTile(const FloorTile& other) = delete;
-    FloorTile(FloorTile&& other) noexcept = delete;
-    FloorTile& operator=(const FloorTile& other) = delete;
-    FloorTile& operator=(FloorTile&& other) noexcept = delete;
-    int id() const;
+    FloorTile(const FloorTile& other) = default;
+    FloorTile(FloorTile&& other) noexcept = default;
+    FloorTile& operator=(const FloorTile& other) = default;
+    FloorTile& operator=(FloorTile&& other) noexcept = default;
+
+    int id() const { return m_id; }
 
 private:
-    const int m_id;
+    int m_id;
 };
 
 #endif

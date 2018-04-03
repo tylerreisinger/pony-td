@@ -1,5 +1,8 @@
 #include "TileGraphic.h"
 
-#include <memory>
+#include <utility>
 
-TileGraphic::TileGraphic(sf::Image sprite) : m_sprite(std::move(sprite)) {}
+TileGraphic::TileGraphic(sf::Texture texture) : m_texture(std::move(texture)) {}
+
+
+const sf::Texture& TileGraphic::texture() const { return m_texture; }

@@ -2,7 +2,12 @@
 
 #include <ratio>
 
+#include "World/TileSet.h"
+#include "World/World.h"
+#include "World/WorldRenderer.h"
+
 Game::Game() {}
+Game::~Game() {}
 
 void Game::run(sf::VideoMode window_mode) {
     using namespace std::chrono_literals;
@@ -23,6 +28,11 @@ void Game::run(sf::VideoMode window_mode) {
                 frame_time.get_frame_start_time();
         auto sleep_duration = time_step - frame_length;
 
+        std::cout << std::chrono::duration_cast<
+                             std::chrono::duration<double, std::milli>>(
+                             frame_length)
+                             .count()
+                  << std::endl;
         if(sleep_duration > decltype(frame_length)::zero()) {
             std::this_thread::sleep_for(sleep_duration);
         }
@@ -36,6 +46,30 @@ void Game::initialize(sf::VideoMode window_mode) {
     create_window(window_mode);
     std::vector<char> chars = load_font_data(file_path);
     m_font = create_font_from_data(chars);
+
+    auto default_floor = FloorTile(1);
+    auto default_tile = MapTile(std::move(default_floor));
+
+    m_world = std::make_unique<World>(15, 15, default_tile);
+
+    sf::Texture texture1_gfx;
+    sf::Texture texture2_gfx;
+
+    texture1_gfx.loadFromFile("Assets/Tiles/tile1.png");
+    texture2_gfx.loadFromFile("Assets/Tiles/tile2.png");
+
+    TileSet ts(32, 32);
+    ts.set_tile_graphic(1, std::move(texture1_gfx));
+    ts.set_tile_graphic(2, std::move(texture2_gfx));
+
+    m_world->set_tile(2, 2, {FloorTile(2)});
+    m_world->set_tile(3, 3, {FloorTile(2)});
+    m_world->set_tile(4, 4, {FloorTile(2)});
+    m_world->set_tile(5, 5, {FloorTile(2)});
+
+    m_world_renderer = std::make_unique<WorldRenderer>(std::move(ts), 400, 400);
+
+    std::cout << "Initialized" << std::endl;
 }
 
 void Game::event_loop() {
@@ -86,6 +120,8 @@ void Game::draw(const GameTime& time) {
     m_window.clear();
 
     m_window.draw(make_message("Glimmer is the best pone", m_font));
+    m_world_renderer->render(m_window, *m_world, m_camera);
+
 
     m_window.display();
 }
