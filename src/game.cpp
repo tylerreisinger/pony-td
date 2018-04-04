@@ -26,8 +26,6 @@ void Game::run(sf::VideoMode window_mode) {
 
         draw(frame_time);
 
-        std::cout << m_fps_counter->average_frame_rate() << std::endl;
-
         auto frame_length = std::chrono::high_resolution_clock::now() -
                 frame_time.get_frame_start_time();
         auto sleep_duration = time_step - frame_length;
@@ -44,8 +42,12 @@ void Game::create_window(sf::VideoMode window_mode) {
 void Game::initialize(sf::VideoMode window_mode) {
     create_window(window_mode);
     m_fps_counter = std::make_unique<FrameRateCounter>(30.0);
-    std::vector<char> chars = load_font_data(file_path);
-    m_font = create_font_from_data(chars);
+
+    bool result = m_font.loadFromFile(file_path);
+    if(!result) {
+        throw std::runtime_error(
+                "Failed to load font file '" + file_path + "'.");
+    }
 
     auto default_floor = FloorTile(1);
     auto default_tile = MapTile(std::move(default_floor));
@@ -119,9 +121,20 @@ void Game::update(const GameTime& time) {}
 void Game::draw(const GameTime& time) {
     m_window.clear();
 
-    m_window.draw(make_message("Glimmer is the best pone", m_font));
     m_world_renderer->render(m_window, *m_world, m_camera);
-
+    draw_fps(time);
 
     m_window.display();
+}
+
+void Game::draw_fps(const GameTime& time) {
+    auto frame_rate = m_fps_counter->average_frame_rate();
+    auto font = m_font;
+    auto message = sf::Text(std::to_string(frame_rate) + " fps", font);
+    message.setFillColor(sf::Color(255, 255, 255));
+    message.setOutlineColor(sf::Color(0, 0, 0));
+    message.setOutlineThickness(3.0);
+    message.setCharacterSize(32);
+
+    m_window.draw(message);
 }

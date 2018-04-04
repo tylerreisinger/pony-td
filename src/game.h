@@ -28,6 +28,8 @@ private:
     void update(const GameTime& time);
     void draw(const GameTime& time);
 
+    void draw_fps(const GameTime& time);
+
     std::vector<char> load_font_data(const std::string& file_path);
     sf::Font create_font_from_data(const std::vector<char>& data);
     sf::Text make_message(const std::string& m, const sf::Font& font);
