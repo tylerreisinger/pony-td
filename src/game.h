@@ -32,8 +32,6 @@ private:
 
     std::vector<char> load_font_data(const std::string& file_path);
     sf::Font create_font_from_data(const std::vector<char>& data);
-    sf::Text make_message(const std::string& m, const sf::Font& font);
-    void check_font_file_path(std::ifstream& font_file);
 
     GameClock m_game_clock;
     sf::RenderWindow m_window;

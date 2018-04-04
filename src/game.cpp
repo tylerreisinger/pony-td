@@ -84,7 +84,7 @@ void Game::event_loop() {
 }
 std::vector<char> Game::load_font_data(const std::string& file_path) {
     std::ifstream font_file(file_path);
-    check_font_file_path(font_file);
+
     font_file.seekg(0, std::ios_base::end);
     std::size_t font_size = font_file.tellg();
     font_file.seekg(0, std::ios_base::beg);
@@ -101,21 +101,6 @@ sf::Font Game::create_font_from_data(const std::vector<char>& data) {
     }
     return font;
 }
-
-sf::Text Game::make_message(const std::string& m, const sf::Font& font) {
-    sf::Text message(m, font);
-    message.setCharacterSize(12);
-    message.setColor(sf::Color(255, 0, 255));
-    return message;
-}
-
-void Game::check_font_file_path(std::ifstream& font_file) {
-    if(!font_file.is_open()) {
-        std::cerr << "Failed to load font file." << std::endl;
-        throw std::runtime_error("Font file not found.");
-    }
-}
-
 void Game::update(const GameTime& time) {}
 
 void Game::draw(const GameTime& time) {
