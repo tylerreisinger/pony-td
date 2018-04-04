@@ -1,4 +1,5 @@
 set(SOURCES
+        ${CMAKE_CURRENT_SOURCE_DIR}/FrameRateCounter.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/game.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/GameClock.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/GameTime.cpp
@@ -14,6 +15,7 @@ set(SOURCES
 PARENT_SCOPE)
 
 set(HEADERS
+        ${CMAKE_CURRENT_SOURCE_DIR}/FrameRateCounter.h
         ${CMAKE_CURRENT_SOURCE_DIR}/game.h
         ${CMAKE_CURRENT_SOURCE_DIR}/GameClock.h
         ${CMAKE_CURRENT_SOURCE_DIR}/GameTime.h

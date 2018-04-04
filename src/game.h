@@ -10,6 +10,7 @@
 #include <memory>
 #include <thread>
 
+class FrameRateCounter;
 class World;
 class WorldRenderer;
 
@@ -39,6 +40,7 @@ private:
     Camera m_camera;
     std::unique_ptr<World> m_world;
     std::unique_ptr<WorldRenderer> m_world_renderer;
+    std::unique_ptr<FrameRateCounter> m_fps_counter;
 };
 
 #endif // GAME_H

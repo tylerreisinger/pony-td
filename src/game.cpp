@@ -2,6 +2,7 @@
 
 #include <ratio>
 
+#include "FrameRateCounter.h"
 #include "World/TileSet.h"
 #include "World/World.h"
 #include "World/WorldRenderer.h"
@@ -17,6 +18,7 @@ void Game::run(sf::VideoMode window_mode) {
 
     while(m_window.isOpen()) {
         GameTime frame_time = m_game_clock.tick(time_step);
+        m_fps_counter->tick(frame_time);
 
         event_loop();
 
@@ -24,15 +26,12 @@ void Game::run(sf::VideoMode window_mode) {
 
         draw(frame_time);
 
+        std::cout << m_fps_counter->average_frame_rate() << std::endl;
+
         auto frame_length = std::chrono::high_resolution_clock::now() -
                 frame_time.get_frame_start_time();
         auto sleep_duration = time_step - frame_length;
 
-        std::cout << std::chrono::duration_cast<
-                             std::chrono::duration<double, std::milli>>(
-                             frame_length)
-                             .count()
-                  << std::endl;
         if(sleep_duration > decltype(frame_length)::zero()) {
             std::this_thread::sleep_for(sleep_duration);
         }
@@ -44,6 +43,7 @@ void Game::create_window(sf::VideoMode window_mode) {
 }
 void Game::initialize(sf::VideoMode window_mode) {
     create_window(window_mode);
+    m_fps_counter = std::make_unique<FrameRateCounter>(30.0);
     std::vector<char> chars = load_font_data(file_path);
     m_font = create_font_from_data(chars);
 
