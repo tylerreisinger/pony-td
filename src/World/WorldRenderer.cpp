@@ -56,8 +56,8 @@ void WorldRenderer::render(sf::RenderWindow& window,
         drawing_offset.y = -std::fmod(world_start_pos.y, scaled_tile_size.y);
     }
 
-    int tile_count_x = std::ceil(render_width() / scaled_tile_size.x);
-    int tile_count_y = std::ceil(render_height() / scaled_tile_size.y);
+    int tile_count_x = std::ceil(render_width() / scaled_tile_size.x) + 1;
+    int tile_count_y = std::ceil(render_height() / scaled_tile_size.y) + 1;
     tile_count_x = std::min(world.width(), tile_count_x);
     tile_count_y = std::min(world.height(), tile_count_y);
     tile_count_x = std::min(world.width() - tile_offset.x, tile_count_x);
@@ -74,6 +74,7 @@ void WorldRenderer::render(sf::RenderWindow& window,
             sprite.setOrigin(0, 0);
             sprite.setPosition(drawing_offset.x + x * scaled_tile_size.x,
                     drawing_offset.y + y * scaled_tile_size.y);
+            sprite.setScale(camera.zoom_factor(), camera.zoom_factor());
 
             window.draw(sprite);
         }

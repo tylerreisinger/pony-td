@@ -37,7 +37,7 @@ private:
     sf::RenderWindow m_window;
     const std::string file_path = "Assets/Fonts/Inconsolata/Inconsolata.otf";
     sf::Font m_font;
-    Camera m_camera = Camera({8 * 64, 8 * 64});
+    Camera m_camera;
     std::unique_ptr<World> m_world;
     std::unique_ptr<WorldRenderer> m_world_renderer;
     std::unique_ptr<FrameRateCounter> m_fps_counter;

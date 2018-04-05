@@ -69,6 +69,9 @@ void Game::initialize(sf::VideoMode window_mode) {
     m_world->set_tile(4, 4, {FloorTile(2)});
 
     m_world_renderer = std::make_unique<WorldRenderer>(std::move(ts), 600, 600);
+    m_camera.set_look_at(
+            sf::Vector2<double>(m_world->width() * (ts.tile_width() / 2),
+                    m_world->height() * (ts.tile_height() / 2)));
 
     std::cout << "Initialized" << std::endl;
 }
@@ -101,7 +104,6 @@ sf::Font Game::create_font_from_data(const std::vector<char>& data) {
     return font;
 }
 void Game::update(const GameTime& time) {
-    m_camera.set_look_at(m_camera.look_at() - sf::Vector2<double>{1.0, 1.0});
 }
 
 void Game::draw(const GameTime& time) {
