@@ -52,7 +52,7 @@ void Game::initialize(sf::VideoMode window_mode) {
     auto default_floor = FloorTile(1);
     auto default_tile = MapTile(std::move(default_floor));
 
-    m_world = std::make_unique<World>(15, 15, default_tile);
+    m_world = std::make_unique<World>(8, 8, default_tile);
 
     sf::Texture texture1_gfx;
     sf::Texture texture2_gfx;
@@ -60,16 +60,15 @@ void Game::initialize(sf::VideoMode window_mode) {
     texture1_gfx.loadFromFile("Assets/Tiles/tile1.png");
     texture2_gfx.loadFromFile("Assets/Tiles/tile2.png");
 
-    TileSet ts(32, 32);
+    TileSet ts(64, 64);
     ts.set_tile_graphic(1, std::move(texture1_gfx));
     ts.set_tile_graphic(2, std::move(texture2_gfx));
 
-    m_world->set_tile(2, 2, {FloorTile(2)});
+    m_world->set_tile(0, 0, {FloorTile(2)});
     m_world->set_tile(3, 3, {FloorTile(2)});
     m_world->set_tile(4, 4, {FloorTile(2)});
-    m_world->set_tile(5, 5, {FloorTile(2)});
 
-    m_world_renderer = std::make_unique<WorldRenderer>(std::move(ts), 400, 400);
+    m_world_renderer = std::make_unique<WorldRenderer>(std::move(ts), 600, 600);
 
     std::cout << "Initialized" << std::endl;
 }
@@ -101,7 +100,9 @@ sf::Font Game::create_font_from_data(const std::vector<char>& data) {
     }
     return font;
 }
-void Game::update(const GameTime& time) {}
+void Game::update(const GameTime& time) {
+    m_camera.set_look_at(m_camera.look_at() - sf::Vector2<double>{1.0, 1.0});
+}
 
 void Game::draw(const GameTime& time) {
     m_window.clear();
