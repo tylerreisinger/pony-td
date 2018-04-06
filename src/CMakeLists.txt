@@ -6,6 +6,7 @@ set(SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Camera.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/CameraController.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTile.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/MapTile.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileGraphic.cpp
@@ -21,6 +22,7 @@ set(HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/GameTime.h
 
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Camera.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/CameraController.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTile.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/MapTile.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileGraphic.h

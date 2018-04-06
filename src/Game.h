@@ -10,6 +10,7 @@
 #include <memory>
 #include <thread>
 
+class CameraController;
 class FrameRateCounter;
 class World;
 class WorldRenderer;
@@ -38,9 +39,11 @@ private:
     const std::string file_path = "Assets/Fonts/Inconsolata/Inconsolata.otf";
     sf::Font m_font;
     Camera m_camera;
+
     std::unique_ptr<World> m_world;
     std::unique_ptr<WorldRenderer> m_world_renderer;
     std::unique_ptr<FrameRateCounter> m_fps_counter;
+    std::unique_ptr<CameraController> m_camera_controller;
 };
 
 #endif // GAME_H

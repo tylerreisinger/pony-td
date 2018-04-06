@@ -18,6 +18,7 @@ public:
     void set_look_at(sf::Vector2<double> vec);
 
     const sf::Vector2<double>& look_at() const;
+    sf::Vector2<double>& look_at();
     double zoom_factor() const;
 
 private:

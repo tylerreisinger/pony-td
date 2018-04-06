@@ -12,5 +12,6 @@ void Camera::set_look_at(sf::Vector2<double> vec) {
 }
 
 const sf::Vector2<double>& Camera::look_at() const { return m_look_at; }
+sf::Vector2<double>& Camera::look_at() { return m_look_at; }
 
 double Camera::zoom_factor() const { return m_zoom_factor; }

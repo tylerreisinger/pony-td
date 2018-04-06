@@ -3,6 +3,7 @@
 #include <ratio>
 
 #include "FrameRateCounter.h"
+#include "World/CameraController.h"
 #include "World/TileSet.h"
 #include "World/World.h"
 #include "World/WorldRenderer.h"
@@ -68,10 +69,12 @@ void Game::initialize(sf::VideoMode window_mode) {
     m_world->set_tile(3, 3, {FloorTile(2)});
     m_world->set_tile(4, 4, {FloorTile(2)});
 
-    m_world_renderer = std::make_unique<WorldRenderer>(std::move(ts), 600, 600);
+    m_world_renderer = std::make_unique<WorldRenderer>(
+            std::move(ts), m_window.getSize().x, m_window.getSize().y);
     m_camera.set_look_at(
             sf::Vector2<double>(m_world->width() * (ts.tile_width() / 2),
                     m_world->height() * (ts.tile_height() / 2)));
+    m_camera_controller = std::make_unique<CameraController>();
 
     std::cout << "Initialized" << std::endl;
 }
@@ -103,7 +106,9 @@ sf::Font Game::create_font_from_data(const std::vector<char>& data) {
     }
     return font;
 }
+
 void Game::update(const GameTime& time) {
+    m_camera_controller->update(time, m_camera, *m_world, *m_world_renderer);
 }
 
 void Game::draw(const GameTime& time) {
