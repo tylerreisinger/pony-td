@@ -16,6 +16,7 @@ set(SOURCES
 PARENT_SCOPE)
 
 set(HEADERS
+        ${CMAKE_CURRENT_SOURCE_DIR}/Flags.h
         ${CMAKE_CURRENT_SOURCE_DIR}/FrameRateCounter.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Game.h
         ${CMAKE_CURRENT_SOURCE_DIR}/GameClock.h
