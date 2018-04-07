@@ -4,6 +4,7 @@ project(pony_td)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 add_subdirectory("src")
+include_directories("src")
 
 add_executable(pony_td ${SOURCES})
 

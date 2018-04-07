@@ -1,3 +1,4 @@
 #include "FloorTile.h"
 
-FloorTile::FloorTile(int tile_id) : m_id(tile_id) {}
+FloorTile::FloorTile(const FloorTileDefinition* definition)
+    : m_definition(definition) {}

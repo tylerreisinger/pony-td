@@ -3,6 +3,7 @@
 
 #include "GameClock.h"
 #include "World/Camera.h"
+#include "World/FloorTileDirectory.h"
 #include <SFML/Graphics.hpp>
 #include <chrono>
 #include <fstream>
@@ -39,6 +40,7 @@ private:
     const std::string file_path = "Assets/Fonts/Inconsolata/Inconsolata.otf";
     sf::Font m_font;
     Camera m_camera;
+    FloorTileDirectory m_floor_directory;
 
     std::unique_ptr<World> m_world;
     std::unique_ptr<WorldRenderer> m_world_renderer;

@@ -50,7 +50,10 @@ void Game::initialize(sf::VideoMode window_mode) {
                 "Failed to load font file '" + file_path + "'.");
     }
 
-    auto default_floor = FloorTile(1);
+    m_floor_directory.add_tile(std::make_unique<FloorTileDefinition>(1));
+    m_floor_directory.add_tile(std::make_unique<FloorTileDefinition>(2));
+
+    auto default_floor = FloorTile(&m_floor_directory[1]);
     auto default_tile = MapTile(std::move(default_floor));
 
     m_world = std::make_unique<World>(8, 8, default_tile);
@@ -65,9 +68,11 @@ void Game::initialize(sf::VideoMode window_mode) {
     ts.set_tile_graphic(1, std::move(texture1_gfx));
     ts.set_tile_graphic(2, std::move(texture2_gfx));
 
-    m_world->set_tile(0, 0, {FloorTile(2)});
-    m_world->set_tile(3, 3, {FloorTile(2)});
-    m_world->set_tile(4, 4, {FloorTile(2)});
+    auto road_tile = FloorTile(&m_floor_directory[2]);
+
+    m_world->set_tile(0, 0, {road_tile});
+    m_world->set_tile(3, 3, {road_tile});
+    m_world->set_tile(4, 4, {road_tile});
 
     m_world_renderer = std::make_unique<WorldRenderer>(
             std::move(ts), m_window.getSize().x, m_window.getSize().y);

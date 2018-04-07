@@ -8,6 +8,8 @@ set(SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Camera.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/CameraController.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTile.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTileDefinition.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTileDirectory.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/MapTile.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileGraphic.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileSet.cpp
@@ -25,6 +27,8 @@ set(HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Camera.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/CameraController.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTile.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTileDefinition.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTileDirectory.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/MapTile.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileGraphic.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileSet.h
