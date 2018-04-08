@@ -122,7 +122,7 @@ void Game::draw(const GameTime& time) {
 
 void Game::draw_fps(const GameTime& time) {
     auto frame_rate = m_fps_counter->average_frame_rate();
-    auto font = m_font;
+    auto& font = m_font;
     auto message = sf::Text(std::to_string(frame_rate) + " fps", font);
     message.setFillColor(sf::Color(255, 255, 255));
     message.setOutlineColor(sf::Color(0, 0, 0));
