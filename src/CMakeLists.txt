@@ -32,6 +32,7 @@ set(HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/World/MapTile.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileGraphic.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileSet.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/TileProperties.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/World.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/WorldRenderer.h
 PARENT_SCOPE)

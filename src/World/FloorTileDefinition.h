@@ -1,7 +1,7 @@
 #ifndef WORLD_FLOORTILEDEFINITION_H
 #define WORLD_FLOORTILEDEFINITION_H
 
-#include "../Flags.h"
+#include "TileProperties.h"
 
 static constexpr int INVALID_ID = 0;
 
@@ -11,7 +11,7 @@ class FloorTileDefinition {
     friend class FloorTileDirectory;
 
 public:
-    FloorTileDefinition(int id);
+    FloorTileDefinition(int id, TileFlags flags = TileFlags::none());
     ~FloorTileDefinition() = default;
 
     FloorTileDefinition(const FloorTileDefinition& other) = delete;
@@ -22,8 +22,12 @@ public:
 
     int id() const;
 
+    const TileFlags& flags() const;
+    TileFlags& flags();
+
 private:
     int m_id;
+    TileFlags m_flags;
 };
 
 #endif

@@ -2,6 +2,7 @@
 #define WORLD_FLOORTILE_H
 
 #include "FloorTileDefinition.h"
+#include "TileProperties.h"
 
 class FloorTile {
 public:
@@ -14,6 +15,8 @@ public:
     FloorTile& operator=(FloorTile&& other) noexcept = default;
 
     int id() const { return m_definition->id(); }
+
+    const TileFlags& flags() const;
 
 private:
     const FloorTileDefinition* m_definition;

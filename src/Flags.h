@@ -57,7 +57,7 @@ public:
     void print_flag_bits(std::ostream& stream, int max_bits = -1);
 
     static constexpr Flags<T> from_value(StorageType value);
-    static constexpr Flags<T> empty();
+    static constexpr Flags<T> none();
 
 private:
     StorageType m_value = 0x0;
@@ -252,7 +252,7 @@ inline void Flags<T>::print_flag_bits(std::ostream& stream, int max_bits) {
 }
 
 template <typename T>
-inline constexpr Flags<T> Flags<T>::empty() {
+inline constexpr Flags<T> Flags<T>::none() {
     return Flags<T>();
 }
 
