@@ -10,11 +10,13 @@
 #include <iostream>
 #include <memory>
 #include <thread>
+#include <vector>
 
 class CameraController;
 class FrameRateCounter;
 class World;
 class WorldRenderer;
+class Entity;
 
 class Game {
 public:
@@ -41,6 +43,7 @@ private:
     sf::Font m_font;
     Camera m_camera;
     FloorTileDirectory m_floor_directory;
+    std::vector<std::unique_ptr<Entity>> m_entities;
 
     std::unique_ptr<World> m_world;
     std::unique_ptr<WorldRenderer> m_world_renderer;

@@ -11,7 +11,7 @@ class Entity : public IEntity {
     friend const Component* get_component(const Entity& entity);
 
 public:
-    Entity() = default;
+    Entity(PhysicsComponent physics);
     virtual ~Entity() = default;
 
     virtual void update(const GameTime& time);

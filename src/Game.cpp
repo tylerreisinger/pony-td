@@ -4,6 +4,7 @@
 
 #include "FrameRateCounter.h"
 #include "World/CameraController.h"
+#include "World/Entity.h"
 #include "World/TileSet.h"
 #include "World/World.h"
 #include "World/WorldRenderer.h"
@@ -70,6 +71,8 @@ void Game::initialize(sf::VideoMode window_mode) {
 
     auto road_tile = FloorTile(&m_floor_directory[2]);
 
+    m_entities.push_back(std::make_unique<Entity>(PhysicsComponent()));
+
     m_world->set_tile(0, 0, {road_tile});
     m_world->set_tile(3, 3, {road_tile});
     m_world->set_tile(4, 4, {road_tile});
@@ -114,6 +117,10 @@ sf::Font Game::create_font_from_data(const std::vector<char>& data) {
 
 void Game::update(const GameTime& time) {
     m_camera_controller->update(time, m_camera, *m_world, *m_world_renderer);
+
+    for(auto& entity : m_entities) {
+        entity->update(time);
+    }
 }
 
 void Game::draw(const GameTime& time) {

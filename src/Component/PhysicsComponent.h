@@ -35,4 +35,6 @@ private:
     double m_facing = 0.0;
 };
 
+std::ostream& operator <<(std::ostream& stream, const PhysicsComponent& physics);
+
 #endif
