@@ -71,8 +71,6 @@ void Game::initialize(sf::VideoMode window_mode) {
 
     auto road_tile = FloorTile(&m_floor_directory[2]);
 
-    m_entities.push_back(std::make_unique<Entity>(PhysicsComponent()));
-
     m_world->set_tile(0, 0, {road_tile});
     m_world->set_tile(3, 3, {road_tile});
     m_world->set_tile(4, 4, {road_tile});

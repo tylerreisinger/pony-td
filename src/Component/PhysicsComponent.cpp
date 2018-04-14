@@ -1,7 +1,7 @@
 #include "PhysicsComponent.h"
 #include "../GameTime.h"
-#include "../World/Entity.h"
 #include "../VectorPrint.h"
+#include "../World/Entity.h"
 
 #include <iostream>
 
@@ -42,13 +42,11 @@ void PhysicsComponent::update(Entity&, const GameTime& time) {
 
 std::string PhysicsComponent::name() const { return "PhysicsComponent"; }
 
-std::ostream& operator<<(std::ostream& stream, const PhysicsComponent& physics)
-{
-    stream << "PhysicsComponent { " 
-        << "position: " << physics.position()
-        << ", velocity: " << physics.velocity()
-        << ", facing: " << physics.facing()
-        << " }";
-    return stream; 
+std::ostream& operator<<(
+        std::ostream& stream, const PhysicsComponent& physics) {
+    stream << "PhysicsComponent { "
+           << "position: " << physics.position()
+           << ", velocity: " << physics.velocity()
+           << ", facing: " << physics.facing() << " }";
+    return stream;
 }
- 

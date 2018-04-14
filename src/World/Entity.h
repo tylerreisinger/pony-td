@@ -1,38 +1,25 @@
 #ifndef WORLD_ENTITY_H
 #define WORLD_ENTITY_H
 
-#include "../Component/PhysicsComponent.h"
 #include "IEntity.h"
 
+#include <array>
+
+
 class Entity : public IEntity {
-    template <typename Component>
-    friend Component* get_component(Entity& entity);
-    template <typename Component>
-    friend const Component* get_component(const Entity& entity);
+    static constexpr int MAX_COMPONENTS = 32;
 
 public:
-    Entity(PhysicsComponent physics);
+    Entity(int id);
     virtual ~Entity() = default;
 
     virtual void update(const GameTime& time);
 
+    int id() const { return m_id; }
+
 private:
-    PhysicsComponent m_physics_component;
+    int m_id;
+    std::array<int, MAX_COMPONENTS> m_component_ids;
 };
-
-template <typename Component>
-Component* get_component(Entity& entity);
-template <typename Component>
-const Component* get_component(const Entity& entity);
-
-template <>
-inline PhysicsComponent* get_component<PhysicsComponent>(Entity& entity) {
-    return &entity.m_physics_component;
-}
-template <>
-inline const PhysicsComponent* get_component<PhysicsComponent>(
-        const Entity& entity) {
-    return &entity.m_physics_component;
-}
 
 #endif
