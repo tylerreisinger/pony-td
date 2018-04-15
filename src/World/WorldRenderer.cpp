@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Window/Window.hpp>
@@ -77,6 +78,14 @@ void WorldRenderer::render(sf::RenderWindow& window,
             sprite.setScale(camera.zoom_factor(), camera.zoom_factor());
 
             window.draw(sprite);
+
+            if(world.has_spawn_point(x, y)) {
+                sf::RectangleShape rect({32.0, 32.0});
+                rect.setPosition(sprite.getPosition() + sf::Vector2<float>{16.0, 16.0});
+                rect.setFillColor(sf::Color(50, 50, 225, 225));
+
+                window.draw(rect);
+            }
         }
     }
 }

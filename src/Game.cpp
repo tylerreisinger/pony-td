@@ -82,6 +82,7 @@ void Game::initialize(sf::VideoMode window_mode) {
     m_world->set_tile(0, 0, {road_tile});
     m_world->set_tile(3, 3, {road_tile});
     m_world->set_tile(4, 4, {road_tile});
+    m_world->add_spawn_point(SpawnPoint(*m_world, sf::Vector2<int>{1, 0}));
 
     m_world_renderer = std::make_unique<WorldRenderer>(
             std::move(ts), m_window.getSize().x, m_window.getSize().y);

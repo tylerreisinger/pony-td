@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "MapTile.h"
+#include "SpawnPoint.h"
 
 class World {
 public:
@@ -20,10 +21,15 @@ public:
     const MapTile& tile(int x, int y) const;
     void set_tile(int x, int y, MapTile tile);
 
+    const std::vector<SpawnPoint>& spawn_points() const;
+    void add_spawn_point(SpawnPoint sp);
+    bool has_spawn_point(int x, int y) const;
+
 protected:
     int m_width;
     int m_height;
     std::vector<MapTile> m_grid;
+    std::vector<SpawnPoint> m_spawn_points;
 };
 
 
