@@ -5,8 +5,17 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 add_subdirectory("src")
 include_directories("src")
+include_directories("entityx")
 
-add_executable(pony_td ${SOURCES})
+set(ENTITY_X_SOURCES 
+    entityx/entityx/System.cc 
+    entityx/entityx/Event.cc 
+    entityx/entityx/Entity.cc 
+    entityx/entityx/help/Timer.cc 
+    entityx/entityx/help/Pool.cc
+)
+
+add_executable(pony_td ${SOURCES} ${ENTITY_X_SOURCES})
 
 set_target_properties(pony_td PROPERTIES
     CXX_STANDARD 14
@@ -19,3 +28,10 @@ if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(pony_td ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif()
+
+# EntityX config
+set(ENTITYX_MAJOR_VERSION 1)
+set(ENTITYX_MINOR_VERSION 1)
+set(ENTITYX_PATCH_VERSION 2)
+set(ENTITYX_VERSION ${ENTITYX_MAJOR_VERSION}.${ENTITYX_MINOR_VERSION}.${ENTITYX_PATCH_VERSION})
+
