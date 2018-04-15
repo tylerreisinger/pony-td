@@ -3,6 +3,8 @@
 
 #include <SFML/System/Vector2.hpp>
 
+namespace comp {
+
 class Velocity {
 public:
     Velocity() = default;
@@ -13,4 +15,5 @@ public:
     sf::Vector2<double> velocity;
 };
 
+} // namespace comp
 #endif

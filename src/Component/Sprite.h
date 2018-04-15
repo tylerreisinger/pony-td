@@ -5,6 +5,8 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
+namespace comp {
+
 class Sprite {
 public:
     Sprite() = default;
@@ -19,5 +21,7 @@ public:
 
     sf::Sprite sprite;
 };
+
+} // namespace comp
 
 #endif

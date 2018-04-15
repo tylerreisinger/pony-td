@@ -93,10 +93,10 @@ void Game::initialize(sf::VideoMode window_mode) {
     m_ecs = std::make_unique<entityx::EntityX>();
 
     auto my_entity = m_ecs->entities.create();
-    my_entity.assign<Position>(20.0, 50.0);
-    my_entity.assign<Velocity>(40.0, 40.0);
-    m_ecs->systems.add<MovementSystem>();
-    m_ecs->systems.add<SpriteSystem>(m_window);
+    my_entity.assign<comp::Position>(20.0, 50.0);
+    my_entity.assign<comp::Velocity>(40.0, 40.0);
+    m_ecs->systems.add<sys::MovementSystem>();
+    m_ecs->systems.add<sys::SpriteSystem>(m_window);
     m_ecs->systems.configure();
 
     load_sprites();
@@ -110,7 +110,7 @@ void Game::load_sprites() {
     auto twi_sprite = sf::Sprite(*texture);
 
     auto e = m_ecs->entities.get(entityx::Entity::Id(0, 1));
-    e.assign<Sprite>(std::move(twi_sprite));
+    e.assign<comp::Sprite>(std::move(twi_sprite));
 }
 
 void Game::event_loop() {
@@ -142,7 +142,7 @@ sf::Font Game::create_font_from_data(const std::vector<char>& data) {
 }
 
 void Game::update(const GameTime& time) {
-    m_ecs->systems.update<MovementSystem>(time);
+    m_ecs->systems.update<sys::MovementSystem>(time);
     m_camera_controller->update(time, m_camera, *m_world, *m_world_renderer);
 }
 
@@ -150,7 +150,7 @@ void Game::draw(const GameTime& time) {
     m_window.clear();
 
     m_world_renderer->render(m_window, *m_world, m_camera);
-    m_ecs->systems.update<SpriteSystem>(time);
+    m_ecs->systems.update<sys::SpriteSystem>(time);
     draw_fps(time);
 
     m_window.display();

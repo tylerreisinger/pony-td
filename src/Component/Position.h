@@ -3,6 +3,8 @@
 
 #include <SFML/System/Vector2.hpp>
 
+namespace comp {
+
 class Position {
 public:
     Position() = default;
@@ -12,5 +14,7 @@ public:
 
     sf::Vector2<double> position;
 };
+
+} // namespace comp
 
 #endif
