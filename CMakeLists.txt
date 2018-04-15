@@ -26,6 +26,7 @@ set_target_properties(pony_td PROPERTIES
 find_package(SFML 2 REQUIRED network audio graphics window system)
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
+    message(STATUS ${SFML_INCLUDE_DIR})
     target_link_libraries(pony_td ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif()
 

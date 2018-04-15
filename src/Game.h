@@ -11,6 +11,10 @@
 #include <memory>
 #include <thread>
 
+namespace entityx {
+class EntityX;
+}
+
 class CameraController;
 class FrameRateCounter;
 class World;
@@ -34,6 +38,7 @@ private:
 
     std::vector<char> load_font_data(const std::string& file_path);
     sf::Font create_font_from_data(const std::vector<char>& data);
+    void load_sprites();
 
     GameClock m_game_clock;
     sf::RenderWindow m_window;
@@ -41,6 +46,7 @@ private:
     sf::Font m_font;
     Camera m_camera;
     FloorTileDirectory m_floor_directory;
+    std::unique_ptr<entityx::EntityX> m_ecs;
 
     std::unique_ptr<World> m_world;
     std::unique_ptr<WorldRenderer> m_world_renderer;

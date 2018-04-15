@@ -24,6 +24,13 @@ set(HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/GameClock.h
         ${CMAKE_CURRENT_SOURCE_DIR}/GameTime.h
 
+        ${CMAKE_CURRENT_SOURCE_DIR}/Component/Position.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/Component/Velocity.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/Component/Sprite.h
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/System/MovementSystem.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/System/SpriteSystem.h
+
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Camera.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/CameraController.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTile.h
