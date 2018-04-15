@@ -23,5 +23,5 @@ private:
     unsigned int m_frame_number;
     std::chrono::high_resolution_clock::time_point m_game_start;
     GameTime m_last_frame;
-    double m_game_time_multiplier;
+    double m_game_time_multiplier = 1.0;
 };
