@@ -86,6 +86,14 @@ void WorldRenderer::render(sf::RenderWindow& window,
 
                 window.draw(rect);
             }
+            if(world.has_target(x, y)) {
+                sf::RectangleShape rect({32.0, 32.0});
+                rect.setPosition(
+                        sprite.getPosition() + sf::Vector2<float>{16.0, 16.0});
+                rect.setFillColor(sf::Color(255, 50, 60, 225));
+
+                window.draw(rect);
+            }
         }
     }
 }

@@ -32,4 +32,18 @@ bool World::has_spawn_point(int x, int y) const {
     }
     return false;
 }
- 
+
+const std::vector<Target>& World::targets() const { return m_targets; }
+
+void World::add_target(Target target) {
+    m_targets.push_back(std::move(target));
+}
+
+bool World::has_target(int x, int y) const {
+    for(auto& target : m_targets) {
+        if(target.map_position() == sf::Vector2<int>(x, y)) {
+            return true;
+        }
+    }
+    return false;
+}

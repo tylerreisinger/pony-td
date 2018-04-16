@@ -17,10 +17,10 @@ public:
     SpawnPoint& operator =(const SpawnPoint& other) = delete;
     SpawnPoint& operator =(SpawnPoint&& other) noexcept = default;
 
-    const sf::Vector2<int> map_position() const;
+    const sf::Vector2<int>& map_position() const;
 
     template <typename Rng>
-    const sf::Vector2<double> get_spawn_location(Rng& rng) const {
+    sf::Vector2<double> get_spawn_location(Rng& rng) const {
         std::uniform_real_distribution<double> distribution(0.0, 1.0);
         auto x = distribution(rng);
         auto y = distribution(rng);

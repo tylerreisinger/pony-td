@@ -79,10 +79,19 @@ void Game::initialize(sf::VideoMode window_mode) {
 
     auto road_tile = FloorTile(&m_floor_directory[2]);
 
-    m_world->set_tile(0, 0, {road_tile});
-    m_world->set_tile(3, 3, {road_tile});
+    m_world->set_tile(1, 0, {road_tile});
+    m_world->set_tile(1, 1, {road_tile});
+    m_world->set_tile(1, 2, {road_tile});
+    m_world->set_tile(1, 3, {road_tile});
+    m_world->set_tile(1, 4, {road_tile});
+    m_world->set_tile(2, 4, {road_tile});
+    m_world->set_tile(3, 4, {road_tile});
     m_world->set_tile(4, 4, {road_tile});
+    m_world->set_tile(4, 5, {road_tile});
+    m_world->set_tile(4, 6, {road_tile});
+    m_world->set_tile(4, 7, {road_tile});
     m_world->add_spawn_point(SpawnPoint(*m_world, sf::Vector2<int>{1, 0}));
+    m_world->add_target(Target(*m_world, sf::Vector2<int>{4, 7}));
 
     m_world_renderer = std::make_unique<WorldRenderer>(
             std::move(ts), m_window.getSize().x, m_window.getSize().y);

@@ -12,6 +12,7 @@ set(SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTileDirectory.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/MapTile.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/SpawnPoint.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/Target.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileGraphic.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileSet.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/World.cpp
@@ -39,6 +40,7 @@ set(HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTileDirectory.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/MapTile.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/SpawnPoint.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/Target.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileGraphic.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileSet.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileProperties.h

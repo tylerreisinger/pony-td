@@ -5,6 +5,7 @@
 
 #include "MapTile.h"
 #include "SpawnPoint.h"
+#include "Target.h"
 
 class World {
 public:
@@ -25,11 +26,16 @@ public:
     void add_spawn_point(SpawnPoint sp);
     bool has_spawn_point(int x, int y) const;
 
+    const std::vector<Target>& targets() const;
+    void add_target(Target sp);
+    bool has_target(int x, int y) const;
+
 protected:
     int m_width;
     int m_height;
     std::vector<MapTile> m_grid;
     std::vector<SpawnPoint> m_spawn_points;
+    std::vector<Target> m_targets;
 };
 
 
