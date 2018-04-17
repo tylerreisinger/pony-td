@@ -14,6 +14,8 @@ public:
     MapTile& operator=(MapTile&& other) noexcept = default;
     const FloorTile& floor_tile() const;
 
+    bool is_passable() const { return m_floor_tile.is_passable(); }
+
 private:
     FloorTile m_floor_tile;
 };

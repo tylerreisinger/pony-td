@@ -18,6 +18,10 @@ public:
 
     const TileFlags& flags() const;
 
+    bool is_passable() const {
+        return m_definition->flags().has_flag(TileFlag::Movable);
+    }
+
 private:
     const FloorTileDefinition* m_definition;
 };

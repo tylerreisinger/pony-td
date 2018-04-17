@@ -5,6 +5,8 @@ set(SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/GameTime.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 
+        ${CMAKE_CURRENT_SOURCE_DIR}/AI/AStar.cpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Camera.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/CameraController.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTile.cpp
@@ -25,6 +27,8 @@ set(HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/Game.h
         ${CMAKE_CURRENT_SOURCE_DIR}/GameClock.h
         ${CMAKE_CURRENT_SOURCE_DIR}/GameTime.h
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/AI/AStar.h
 
         ${CMAKE_CURRENT_SOURCE_DIR}/Component/Position.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Component/Velocity.h

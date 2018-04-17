@@ -18,6 +18,7 @@ public:
     World& operator=(World&& other) noexcept = delete;
     int width() const;
     int height() const;
+    int size() const;
     const std::vector<MapTile>& tiles() const;
     const MapTile& tile(int x, int y) const;
     void set_tile(int x, int y, MapTile tile);

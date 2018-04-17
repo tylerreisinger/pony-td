@@ -6,6 +6,7 @@ World::World(int width, int height, const MapTile& default_tile)
 int World::width() const { return m_width; }
 
 int World::height() const { return m_height; }
+int World::size() const { return m_width * m_height; }
 
 const std::vector<MapTile>& World::tiles() const { return m_grid; }
 

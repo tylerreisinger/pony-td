@@ -17,6 +17,8 @@
 #include "World/World.h"
 #include "World/WorldRenderer.h"
 
+#include "AI/AStar.h"
+
 Game::Game() {}
 Game::~Game() {}
 
@@ -60,7 +62,8 @@ void Game::initialize(sf::VideoMode window_mode) {
     }
 
     m_floor_directory.add_tile(std::make_unique<FloorTileDefinition>(1));
-    m_floor_directory.add_tile(std::make_unique<FloorTileDefinition>(2));
+    m_floor_directory.add_tile(
+            std::make_unique<FloorTileDefinition>(2, TileFlag::Movable));
 
     auto default_floor = FloorTile(&m_floor_directory[1]);
     auto default_tile = MapTile(std::move(default_floor));
@@ -110,6 +113,12 @@ void Game::initialize(sf::VideoMode window_mode) {
     m_ecs->systems.configure();
 
     load_sprites();
+
+    AStar as;
+    auto path = as.find_path({1, 0}, {4, 7}, *m_world);
+    as.print_cost_matrix();
+    std::cout << path << std::endl;
+
 
     std::cout << "Initialized" << std::endl;
 }
