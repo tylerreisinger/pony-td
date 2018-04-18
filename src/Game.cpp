@@ -9,6 +9,7 @@
 #include "Component/Position.h"
 #include "Component/Sprite.h"
 #include "Component/Velocity.h"
+#include "System/PathMovementSystem.h"
 #include "System/MovementSystem.h"
 #include "System/SpriteSystem.h"
 
@@ -68,8 +69,6 @@ void Game::initialize(sf::VideoMode window_mode) {
     auto default_floor = FloorTile(&m_floor_directory[1]);
     auto default_tile = MapTile(std::move(default_floor));
 
-    m_world = std::make_unique<World>(8, 8, default_tile);
-
     sf::Texture texture1_gfx;
     sf::Texture texture2_gfx;
 
@@ -79,6 +78,10 @@ void Game::initialize(sf::VideoMode window_mode) {
     TileSet ts(64, 64);
     ts.set_tile_graphic(1, std::move(texture1_gfx));
     ts.set_tile_graphic(2, std::move(texture2_gfx));
+
+
+    m_world = std::make_unique<World>(8, 8, ts.tile_width(), ts.tile_height(), default_tile);
+
 
     auto road_tile = FloorTile(&m_floor_directory[2]);
 
@@ -93,8 +96,9 @@ void Game::initialize(sf::VideoMode window_mode) {
     m_world->set_tile(4, 5, {road_tile});
     m_world->set_tile(4, 6, {road_tile});
     m_world->set_tile(4, 7, {road_tile});
-    m_world->add_spawn_point(SpawnPoint(*m_world, sf::Vector2<int>{1, 0}));
+
     m_world->add_target(Target(*m_world, sf::Vector2<int>{4, 7}));
+    m_world->add_spawn_point(SpawnPoint(*m_world, sf::Vector2<int>{1, 0}));
 
     m_world_renderer = std::make_unique<WorldRenderer>(
             std::move(ts), m_window.getSize().x, m_window.getSize().y);
@@ -106,19 +110,15 @@ void Game::initialize(sf::VideoMode window_mode) {
     m_ecs = std::make_unique<entityx::EntityX>();
 
     auto my_entity = m_ecs->entities.create();
-    my_entity.assign<comp::Position>(20.0, 50.0);
-    my_entity.assign<comp::Velocity>(40.0, 40.0);
+    my_entity.assign<comp::Position>(96, 32);
+    //my_entity.assign<comp::Velocity>(40.0, 40.0);
+    my_entity.assign<comp::PathMovement>(m_world->spawn_points()[0].path_to_goal());
     m_ecs->systems.add<sys::MovementSystem>();
-    m_ecs->systems.add<sys::SpriteSystem>(m_window);
+    m_ecs->systems.add<sys::SpriteSystem>(m_window, m_camera);
+    m_ecs->systems.add<sys::PathMovementSystem>(*m_world);
     m_ecs->systems.configure();
 
     load_sprites();
-
-    AStar as;
-    auto path = as.find_path({1, 0}, {4, 7}, *m_world);
-    as.print_cost_matrix();
-    std::cout << path << std::endl;
-
 
     std::cout << "Initialized" << std::endl;
 }
@@ -162,6 +162,7 @@ sf::Font Game::create_font_from_data(const std::vector<char>& data) {
 
 void Game::update(const GameTime& time) {
     m_ecs->systems.update<sys::MovementSystem>(time);
+    m_ecs->systems.update<sys::PathMovementSystem>(time);
     m_camera_controller->update(time, m_camera, *m_world, *m_world_renderer);
 }
 

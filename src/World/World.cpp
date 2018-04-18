@@ -1,7 +1,10 @@
 #include "World.h"
 
-World::World(int width, int height, const MapTile& default_tile)
-    : m_width(width), m_height(height), m_grid(width * height, default_tile) {}
+World::World(int width, int height, int tile_width, int tile_height, const MapTile& default_tile)
+    : m_width(width), m_height(height), 
+      m_tile_width(tile_width), m_tile_height(tile_height),
+      m_grid(width * height, default_tile) 
+{}
 
 int World::width() const { return m_width; }
 

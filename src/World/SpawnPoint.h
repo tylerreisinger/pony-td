@@ -1,9 +1,12 @@
 #ifndef WORLD_SPAWNPOINT_H
 #define WORLD_SPAWNPOINT_H
 
+#include <optional>
 #include <random>
 
 #include <SFML/System/Vector2.hpp>
+
+#include "AI/AStar.h"
 
 class World;
 
@@ -19,6 +22,8 @@ public:
 
     const sf::Vector2<int>& map_position() const;
 
+    const Path& path_to_goal() const;
+
     template <typename Rng>
     sf::Vector2<double> get_spawn_location(Rng& rng) const {
         std::uniform_real_distribution<double> distribution(0.0, 1.0);
@@ -29,8 +34,11 @@ public:
     }
 
 private:
-    sf::Vector2<int> m_map_position;
+    std::optional<Path> compute_path_to_goal() const;
+
     World* m_world = nullptr;
+    sf::Vector2<int> m_map_position;
+    Path m_path;
 };
 
 #endif

@@ -6,6 +6,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <entityx/System.h>
 
+#include "World/Camera.h"
 #include "GameTime.h"
 
 #include "Component/Position.h"
@@ -15,7 +16,7 @@ namespace sys {
 
 class SpriteSystem : public entityx::System<SpriteSystem> {
 public:
-    SpriteSystem(sf::RenderWindow& window) : m_window(&window) {}
+    SpriteSystem(sf::RenderWindow& window, const Camera& camera) : m_window(&window), m_camera(&camera) {}
     ~SpriteSystem() = default;
 
     SpriteSystem(const SpriteSystem& other) = delete;
@@ -31,13 +32,19 @@ public:
                         comp::Position& position,
                         comp::Sprite& sprite) {
                     auto& s = sprite.sprite;
-                    s.setPosition(position.position.x, position.position.y);
+                    auto p = (sf::Vector2<double>(m_window->getSize()) / 2.0)
+                        - m_camera->look_at();
+                    p += position.position;
+                    s.setPosition(p.x, p.y);
+                    auto rect = s.getTextureRect();
+                    s.setOrigin(rect.width / 2.0, rect.height / 2.0);
                     m_window->draw(s);
                 });
     }
 
 private:
     sf::RenderWindow* m_window;
+    const Camera* m_camera;    
 };
 
 } // namespace sys

@@ -5,6 +5,7 @@
 #include <set>
 #include <unordered_set>
 #include <vector>
+#include <optional>
 
 #include <SFML/System/Vector2.hpp>
 
@@ -34,8 +35,24 @@ struct hash<sf::Vector2<int>> {
 };
 } // namespace std
 
+enum class PathDirection {
+    North,
+    East,
+    South,
+    West,
+
+    NorthEast,
+    SouthEast,
+    SouthWest,
+    NorthWest,
+};
+
+std::ostream& operator <<(std::ostream& stream, PathDirection dir);
+sf::Vector2<double> unit_vector_for_direction(PathDirection dir);
+
 class Path {
 public:
+    static constexpr int NOT_ON_PATH = -1;
     using iterator = std::vector<sf::Vector2<int>>::iterator;
     using const_iterator = std::vector<sf::Vector2<int>>::const_iterator;
 
@@ -48,6 +65,9 @@ public:
     Path& operator=(const Path& other) = default;
     Path& operator=(Path&& other) noexcept = default;
 
+    int current_step(const sf::Vector2<int>& pos) const;
+    std::optional<PathDirection> direction_to_step(int index);
+
     sf::Vector2<int> operator[](std::size_t index) const {
         return m_steps[index];
     }
@@ -56,7 +76,6 @@ public:
     std::size_t size() const { return m_steps.size(); }
     const std::vector<sf::Vector2<int>> steps() const {
         return m_steps;
-        ;
     }
 
     const_iterator begin() const { return m_steps.begin(); }
