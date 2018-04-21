@@ -23,12 +23,19 @@ public:
     int height() const;
     int tile_width() const { return m_tile_width; }
     int tile_height() const { return m_tile_height; }
+    sf::Vector2<int> tile_dimensions() const {
+        return sf::Vector2<int>{m_tile_width, m_tile_height};
+    }
 
     int size() const;
     const std::vector<MapTile>& tiles() const;
     const MapTile& tile(int x, int y) const;
     void set_tile(int x, int y, MapTile tile);
 
+
+    sf::Vector2<double> map_to_world_pos(const sf::Vector2<int>& pos) const {
+        return map_to_world_pos(pos.x, pos.y);
+    }
     sf::Vector2<double> map_to_world_pos(int x, int y) const {
         return sf::Vector2{
             static_cast<double>(x+0.5) * m_tile_width, 

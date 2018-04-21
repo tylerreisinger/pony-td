@@ -112,7 +112,9 @@ void Game::initialize(sf::VideoMode window_mode) {
     auto my_entity = m_ecs->entities.create();
     my_entity.assign<comp::Position>(96, 32);
     //my_entity.assign<comp::Velocity>(40.0, 40.0);
-    my_entity.assign<comp::PathMovement>(m_world->spawn_points()[0].path_to_goal());
+    my_entity.assign<comp::PathMovement>(
+            m_world->spawn_points()[0].path_to_goal().as_kind(
+                    CoordinateKind::WorldSpace, PathAnchor::Center, *m_world));
     m_ecs->systems.add<sys::MovementSystem>();
     m_ecs->systems.add<sys::SpriteSystem>(m_window, m_camera);
     m_ecs->systems.add<sys::PathMovementSystem>(*m_world);

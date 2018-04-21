@@ -19,28 +19,22 @@ void PathMovementSystem::update(entityx::EntityManager& es,
         const GameTime& dt)
 {
     es.each<comp::Position, comp::PathMovement>(
-        [this, dt](entityx::Entity, comp::Position& position,
-            comp::PathMovement& path)
-        {
-            auto map_pos = m_world->world_to_map_pos(position.position);
-            auto path_step = path.path.current_step(map_pos);
-            if(path_step == Path::NOT_ON_PATH) {
-                return;
-            }
-            auto direction = path.path.direction_to_step(path_step + 1);
-            if(!direction) {
-                return;
-            }
-            auto movement_vec = unit_vector_for_direction(*direction);
-            
-            position.position += movement_vec*SPEED*dt.get_elapsed_game().count();
+            [this, dt](entityx::Entity e,
+                    comp::Position& position,
+                    comp::PathMovement& path) {
+                auto& path_trav = path.path;
 
-            std::cout << "Pos: " << position.position << ", Map: "
-                << m_world->world_to_map_pos(position.position) 
-                << " Current Step: " << path.path.current_step(map_pos) 
-                << " Direction: " << *direction << "\n";
-        }
-    );
+                if(path_trav.is_done()) {
+                    e.remove<comp::PathMovement>();
+                    return;
+                }
+
+                auto move_rate = SPEED * dt.get_elapsed_game().count();
+                auto new_position =
+                        path_trav.step(position.position, move_rate);
+
+                position.position = new_position;
+            });
 }
 
 }
