@@ -14,6 +14,7 @@
 #include "System/SpriteSystem.h"
 
 #include "World/CameraController.h"
+#include "World/DelaySpawnBehavior.h"
 #include "World/TileSet.h"
 #include "World/World.h"
 #include "World/WorldRenderer.h"
@@ -97,8 +98,15 @@ void Game::initialize(sf::VideoMode window_mode) {
     m_world->set_tile(4, 6, {road_tile});
     m_world->set_tile(4, 7, {road_tile});
 
+    auto texture = new sf::Texture();
+    texture->loadFromFile("Assets/Sprites/Twilight1.png");
+    auto twi_sprite = sf::Sprite(*texture);
+
     m_world->add_target(Target(*m_world, sf::Vector2<int>{4, 7}));
-    m_world->add_spawn_point(SpawnPoint(*m_world, sf::Vector2<int>{1, 0}));
+    m_world->add_spawn_point(std::make_unique<SpawnPoint>(*m_world,
+            sf::Vector2<int>{1, 0},
+            std::make_unique<DelaySpawnBehavior>(
+                    sf::Sprite(*texture), std::chrono::duration<double>(1.0))));
 
     m_world_renderer = std::make_unique<WorldRenderer>(
             std::move(ts), m_window.getSize().x, m_window.getSize().y);
@@ -113,12 +121,16 @@ void Game::initialize(sf::VideoMode window_mode) {
     my_entity.assign<comp::Position>(96, 32);
     //my_entity.assign<comp::Velocity>(40.0, 40.0);
     my_entity.assign<comp::PathMovement>(
-            m_world->spawn_points()[0].path_to_goal().as_kind(
+            m_world->spawn_points()[0]->path_to_goal().as_kind(
                     CoordinateKind::WorldSpace, PathAnchor::Center, *m_world));
     m_ecs->systems.add<sys::MovementSystem>();
     m_ecs->systems.add<sys::SpriteSystem>(m_window, m_camera);
     m_ecs->systems.add<sys::PathMovementSystem>(*m_world);
     m_ecs->systems.configure();
+
+    auto e = m_ecs->entities.get(entityx::Entity::Id(0, 1));
+    e.assign<comp::Sprite>(std::move(twi_sprite));
+
 
     load_sprites();
 
@@ -126,12 +138,6 @@ void Game::initialize(sf::VideoMode window_mode) {
 }
 
 void Game::load_sprites() {
-    auto texture = new sf::Texture();
-    texture->loadFromFile("Assets/Sprites/Twilight1.png");
-    auto twi_sprite = sf::Sprite(*texture);
-
-    auto e = m_ecs->entities.get(entityx::Entity::Id(0, 1));
-    e.assign<comp::Sprite>(std::move(twi_sprite));
 }
 
 void Game::event_loop() {
@@ -163,6 +169,10 @@ sf::Font Game::create_font_from_data(const std::vector<char>& data) {
 }
 
 void Game::update(const GameTime& time) {
+    for(auto& spawn : m_world->spawn_points()) {
+        spawn->update(*m_ecs, time);
+    }
+
     m_ecs->systems.update<sys::MovementSystem>(time);
     m_ecs->systems.update<sys::PathMovementSystem>(time);
     m_camera_controller->update(time, m_camera, *m_world, *m_world_renderer);

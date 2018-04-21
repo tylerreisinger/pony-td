@@ -1,18 +1,27 @@
 #ifndef WORLD_SPAWNPOINT_H
 #define WORLD_SPAWNPOINT_H
 
+#include <memory>
 #include <optional>
 #include <random>
 
 #include <SFML/System/Vector2.hpp>
 
 #include "AI/AStar.h"
+#include "ISpawnBehavior.h"
 
+namespace entityx {
+class EntityX;
+}
+
+class GameTime;
 class World;
 
 class SpawnPoint {
 public:
-    SpawnPoint(World& world, sf::Vector2<int> position);
+    SpawnPoint(World& world,
+            sf::Vector2<int> position,
+            std::unique_ptr<ISpawnBehavior> behavior);
     ~SpawnPoint() = default;
 
     SpawnPoint(const SpawnPoint& other) = delete;
@@ -23,6 +32,8 @@ public:
     const sf::Vector2<int>& map_position() const;
 
     const Path& path_to_goal() const;
+
+    void update(entityx::EntityX& ecs, const GameTime& time);
 
     template <typename Rng>
     sf::Vector2<double> get_spawn_location(Rng& rng) const {
@@ -39,6 +50,7 @@ private:
     World* m_world = nullptr;
     sf::Vector2<int> m_map_position;
     Path m_path;
+    std::unique_ptr<ISpawnBehavior> m_behavior;
 };
 
 #endif

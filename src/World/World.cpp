@@ -21,16 +21,19 @@ void World::set_tile(int x, int y, MapTile tile) {
     m_grid[x + y * m_width] = std::move(tile);
 }
 
-const std::vector<SpawnPoint>& World::spawn_points() const {
+const std::vector<std::unique_ptr<SpawnPoint>>& World::spawn_points() const {
+    return m_spawn_points;
+}
+std::vector<std::unique_ptr<SpawnPoint>>& World::spawn_points() {
     return m_spawn_points;
 }
 
-void World::add_spawn_point(SpawnPoint sp){
+void World::add_spawn_point(std::unique_ptr<SpawnPoint> sp) {
     m_spawn_points.push_back(std::move(sp));
 }
 bool World::has_spawn_point(int x, int y) const {
     for(auto& point : m_spawn_points) {
-        if(point.map_position() == sf::Vector2<int>(x, y)) {
+        if(point->map_position() == sf::Vector2<int>(x, y)) {
             return true;
         }
     }

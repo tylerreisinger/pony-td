@@ -10,6 +10,8 @@ public:
     Position() = default;
     ~Position() = default;
 
+
+    Position(sf::Vector2<double> pos) : position(pos) {}
     Position(double x, double y) : position(x, y) {}
 
     sf::Vector2<double> position;

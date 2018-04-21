@@ -2,6 +2,7 @@
 #define WORLD_WORLD_H
 
 #include <cmath>
+#include <memory>
 #include <vector>
 
 #include <SFML/System/Vector2.hpp>
@@ -33,6 +34,10 @@ public:
     void set_tile(int x, int y, MapTile tile);
 
 
+    sf::Vector2<double> map_to_world_pos(const sf::Vector2<int>& pos) const {
+        return map_to_world_pos(
+                static_cast<double>(pos.x), static_cast<double>(pos.y));
+    }
     sf::Vector2<double> map_to_world_pos(const sf::Vector2<double>& pos) const {
         return map_to_world_pos(pos.x, pos.y);
     }
@@ -46,8 +51,9 @@ public:
         };
     }
 
-    const std::vector<SpawnPoint>& spawn_points() const;
-    void add_spawn_point(SpawnPoint sp);
+    const std::vector<std::unique_ptr<SpawnPoint>>& spawn_points() const;
+    std::vector<std::unique_ptr<SpawnPoint>>& spawn_points();
+    void add_spawn_point(std::unique_ptr<SpawnPoint> sp);
     bool has_spawn_point(int x, int y) const;
 
     const std::vector<Target>& targets() const;
@@ -61,7 +67,7 @@ protected:
     int m_tile_height;
 
     std::vector<MapTile> m_grid;
-    std::vector<SpawnPoint> m_spawn_points;
+    std::vector<std::unique_ptr<SpawnPoint>> m_spawn_points;
     std::vector<Target> m_targets;
 };
 

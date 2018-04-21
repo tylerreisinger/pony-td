@@ -3,12 +3,16 @@
 #include <cassert>
 #include <iostream>
 
+#include "GameTime.h"
 #include "World.h"
 
 
-SpawnPoint::SpawnPoint(World& world, sf::Vector2<int> position):
-    m_world(&world), m_map_position(position)
-{ 
+SpawnPoint::SpawnPoint(World& world,
+        sf::Vector2<int> position,
+        std::unique_ptr<ISpawnBehavior> behavior)
+    : m_world(&world), m_map_position(position),
+      m_behavior(std::move(behavior)) {
+    m_behavior->set_parent(this);
     auto path = compute_path_to_goal();
     if(!path) {
         std::cerr << "WARNING: No path found to goal.\n";
@@ -44,4 +48,7 @@ std::optional<Path> SpawnPoint::compute_path_to_goal() const {
 const Path& SpawnPoint::path_to_goal() const {
     return m_path;
 }
- 
+
+void SpawnPoint::update(entityx::EntityX& ecs, const GameTime& time) {
+    m_behavior->update(*m_world, ecs, time);
+}

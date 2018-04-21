@@ -11,6 +11,7 @@ set(SOURCES
 
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Camera.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/CameraController.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/DelaySpawnBehavior.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTile.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTileDefinition.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTileDirectory.cpp
@@ -43,9 +44,11 @@ set(HEADERS
 
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Camera.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/CameraController.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/DelaySpawnBehavior.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTile.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTileDefinition.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTileDirectory.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/ISpawnBehavior.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/MapTile.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Path.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/SpawnPoint.h
