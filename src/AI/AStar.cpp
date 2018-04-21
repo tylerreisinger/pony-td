@@ -33,14 +33,14 @@ Path AStar::find_path(
         auto node = *node_iter;
         if(node.position == end) {
             sf::Vector2<int> pos = end;
-            std::vector<sf::Vector2<int>> path;
+            std::vector<sf::Vector2<double>> path;
 
             while(pos != start) {
-                path.push_back(pos);
+                path.push_back(sf::Vector2<double>(pos));
                 pos = m_parents[index_from_point(pos)];
             }
 
-            path.push_back(start);
+            path.push_back(sf::Vector2<double>(start));
             std::reverse(path.begin(), path.end());
 
             return Path(path,

@@ -33,19 +33,16 @@ public:
     void set_tile(int x, int y, MapTile tile);
 
 
-    sf::Vector2<double> map_to_world_pos(const sf::Vector2<int>& pos) const {
+    sf::Vector2<double> map_to_world_pos(const sf::Vector2<double>& pos) const {
         return map_to_world_pos(pos.x, pos.y);
     }
-    sf::Vector2<double> map_to_world_pos(int x, int y) const {
-        return sf::Vector2{
-            static_cast<double>(x+0.5) * m_tile_width, 
-            static_cast<double>(y+0.5) * m_tile_height
-        };
+    sf::Vector2<double> map_to_world_pos(double x, double y) const {
+        return sf::Vector2{x * m_tile_width, y * m_tile_height};
     }
-    sf::Vector2<int> world_to_map_pos(sf::Vector2<double> pos) const {
+    sf::Vector2<double> world_to_map_pos(sf::Vector2<double> pos) const {
         return sf::Vector2{
-            static_cast<int>(std::floor(pos.x / m_tile_width)),
-            static_cast<int>(std::floor(pos.y / m_tile_height)),
+                std::floor(pos.x / m_tile_width),
+                std::floor(pos.y / m_tile_height),
         };
     }
 

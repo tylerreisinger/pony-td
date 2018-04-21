@@ -7,7 +7,7 @@
 #include "VectorMath.h"
 #include "World/World.h"
 
-Path::Path(std::vector<sf::Vector2<int>> path,
+Path::Path(std::vector<sf::Vector2<double>> path,
         double distance,
         CoordinateKind kind)
     : m_steps(path), m_distance(distance), m_kind(kind) {}
@@ -147,19 +147,24 @@ Path Path::as_kind(
     }
     switch(kind) {
     case CoordinateKind::WorldSpace: {
-        std::vector<sf::Vector2<int>> steps;
+        std::vector<sf::Vector2<double>> steps;
         steps.reserve(m_steps.size());
         for(auto step : m_steps) {
-            auto world_pos = world.map_to_world_pos(
-                    step); // + path_anchor_offset(anchor, world);
-            steps.push_back(sf::Vector2<int>(world_pos));
+            auto world_pos = world.map_to_world_pos(step) +
+                    path_anchor_offset(anchor, world);
+            steps.push_back(world_pos);
         }
         return Path(steps, m_distance, kind);
     }
     case CoordinateKind::MapSpace: {
-        // TODO: This, eventually.
-        std::abort();
-        break;
+        std::vector<sf::Vector2<double>> steps;
+        steps.reserve(m_steps.size());
+        for(auto step : m_steps) {
+            auto map_pos = world.world_to_map_pos(step) -
+                    path_anchor_offset(anchor, world);
+            steps.push_back(map_pos);
+        }
+        return Path(steps, m_distance, kind);
     }
     }
 }
@@ -183,7 +188,7 @@ sf::Vector2<double> PathTraverser::get_distance_vector(
     return sf::Vector2<double>(next_step_goal()) - cur_position;
 }
 
-sf::Vector2<int> PathTraverser::next_step_goal() const {
+sf::Vector2<double> PathTraverser::next_step_goal() const {
     assert(m_current_step < m_path.size());
     return m_path[m_current_step];
 }
@@ -213,4 +218,17 @@ sf::Vector2<double> PathTraverser::step(
 
 bool PathTraverser::is_done() const {
     return static_cast<std::size_t>(m_current_step) == m_path.size();
+}
+
+std::ostream& operator<<(std::ostream& stream, const PathTraverser& trav) {
+    for(int i = 0; i < trav.length(); ++i) {
+        if(i == trav.current_step()) {
+            stream << "*";
+        }
+        stream << trav.path()[i];
+        if(i != trav.length() - 1) {
+            stream << " -> ";
+        }
+    }
+    return stream;
 }

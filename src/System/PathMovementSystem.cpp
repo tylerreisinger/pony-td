@@ -23,6 +23,7 @@ void PathMovementSystem::update(entityx::EntityManager& es,
                     comp::Position& position,
                     comp::PathMovement& path) {
                 auto& path_trav = path.path;
+                std::cout << path_trav << std::endl;
 
                 if(path_trav.is_done()) {
                     e.remove<comp::PathMovement>();
