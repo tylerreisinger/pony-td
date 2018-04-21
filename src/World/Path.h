@@ -35,6 +35,7 @@ enum class CoordinateKind {
 std::ostream& operator<<(std::ostream& stream, PathDirection dir);
 sf::Vector2<double> unit_vector_for_direction(PathDirection dir);
 
+//TODO: Template this based on `kind`.
 class Path {
 public:
     static constexpr int NOT_ON_PATH = -1;
