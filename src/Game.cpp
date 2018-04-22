@@ -6,6 +6,11 @@
 
 #include "FrameRateCounter.h"
 
+#include "Data/AssetManager.h"
+#include "Data/TextureLoader.h"
+
+#include "Graphics/Sprite.h"
+
 #include "Component/Position.h"
 #include "Component/Sprite.h"
 #include "Component/Velocity.h"
@@ -56,6 +61,11 @@ void Game::create_window(sf::VideoMode window_mode) {
 void Game::initialize(sf::VideoMode window_mode) {
     create_window(window_mode);
     m_fps_counter = std::make_unique<FrameRateCounter>(30.0);
+    m_asset_manager = std::make_unique<AssetManager>();
+
+    AssetLoader<sf::Texture>* texture_loader = new TextureLoader();
+    m_asset_manager->register_loader(
+            std::unique_ptr<AssetLoader<sf::Texture>>(texture_loader));
 
     bool result = m_font.loadFromFile(file_path);
     if(!result) {
@@ -98,15 +108,15 @@ void Game::initialize(sf::VideoMode window_mode) {
     m_world->set_tile(4, 6, {road_tile});
     m_world->set_tile(4, 7, {road_tile});
 
-    auto texture = new sf::Texture();
-    texture->loadFromFile("Assets/Sprites/Twilight1.png");
-    auto twi_sprite = sf::Sprite(*texture);
+    auto texture =
+            m_asset_manager->load<sf::Texture>("Assets/Sprites/Twilight1.png");
+    auto twi_sprite = Sprite(texture);
 
     m_world->add_target(Target(*m_world, sf::Vector2<int>{4, 7}));
     m_world->add_spawn_point(std::make_unique<SpawnPoint>(*m_world,
             sf::Vector2<int>{1, 0},
             std::make_unique<DelaySpawnBehavior>(
-                    sf::Sprite(*texture), std::chrono::duration<double>(1.0))));
+                    Sprite(texture), std::chrono::duration<double>(1.0))));
 
     m_world_renderer = std::make_unique<WorldRenderer>(
             std::move(ts), m_window.getSize().x, m_window.getSize().y);

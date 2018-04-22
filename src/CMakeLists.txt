@@ -10,6 +10,8 @@ set(SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/Data/AssetManager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Data/TextureLoader.cpp
 
+        ${CMAKE_CURRENT_SOURCE_DIR}/Graphics/Sprite.cpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/System/PathMovementSystem.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Camera.cpp
@@ -39,6 +41,8 @@ set(HEADERS
 
         ${CMAKE_CURRENT_SOURCE_DIR}/Data/AssetManager.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Data/TextureLoader.h
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/Graphics/Sprite.h
 
         ${CMAKE_CURRENT_SOURCE_DIR}/Component/Position.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Component/Velocity.h

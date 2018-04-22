@@ -19,7 +19,8 @@ std::shared_ptr<sf::Texture> TextureLoader::load(
 
 std::shared_ptr<sf::Texture> TextureLoader::load_new_asset(
         const std::string& resource_name) {
-    std::shared_ptr<sf::Texture> texture(new sf::Texture());
+    // std::shared_ptr<sf::Texture> texture(new sf::Texture());
+    auto texture = std::make_shared<sf::Texture>();
     texture->loadFromFile(resource_name);
 
     m_asset_cache.insert(

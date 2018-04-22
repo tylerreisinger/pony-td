@@ -2,9 +2,9 @@
 #define WORLD_DELAYSPAWNBEHAVIOR_H
 #include "ISpawnBehavior.h"
 
-#include <SFML/Graphics/Sprite.hpp>
-
 #include <chrono>
+
+#include "Graphics/Sprite.h"
 
 class SpawnPoint;
 
@@ -13,7 +13,7 @@ class DelaySpawnBehavior : public ISpawnBehavior {
 
 public:
     DelaySpawnBehavior(
-            sf::Sprite sprite, std::chrono::duration<double> spawn_delay);
+            Sprite sprite, std::chrono::duration<double> spawn_delay);
     virtual ~DelaySpawnBehavior() = default;
 
     DelaySpawnBehavior(const DelaySpawnBehavior& other) = delete;
@@ -32,7 +32,7 @@ private:
     std::chrono::duration<double> m_spawn_delay;
     std::chrono::duration<double> m_cur_delay =
             std::chrono::duration<double>(0.0);
-    sf::Sprite m_sprite;
+    Sprite m_sprite;
     SpawnPoint* m_parent = nullptr;
 };
 

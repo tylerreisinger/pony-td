@@ -9,7 +9,7 @@
 #include "World.h"
 
 DelaySpawnBehavior::DelaySpawnBehavior(
-        sf::Sprite sprite, std::chrono::duration<double> spawn_delay)
+        Sprite sprite, std::chrono::duration<double> spawn_delay)
     : m_spawn_delay(spawn_delay), m_sprite(std::move(sprite)) {}
 
 void DelaySpawnBehavior::update(

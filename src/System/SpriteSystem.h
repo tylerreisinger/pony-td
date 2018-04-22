@@ -35,10 +35,10 @@ public:
                     auto p = (sf::Vector2<double>(m_window->getSize()) / 2.0)
                         - m_camera->look_at();
                     p += position.position;
-                    s.setPosition(p.x, p.y);
-                    auto rect = s.getTextureRect();
-                    s.setOrigin(rect.width / 2.0, rect.height / 2.0);
-                    m_window->draw(s);
+                    s->setPosition(p.x, p.y);
+                    auto rect = s->getTextureRect();
+                    s->setOrigin(rect.width / 2.0, rect.height / 2.0);
+                    m_window->draw(*s);
                 });
     }
 

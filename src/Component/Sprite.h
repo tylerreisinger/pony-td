@@ -3,7 +3,7 @@
 
 #include <utility>
 
-#include <SFML/Graphics/Sprite.hpp>
+#include "Graphics/Sprite.h"
 
 namespace comp {
 
@@ -12,14 +12,14 @@ public:
     Sprite() = default;
     ~Sprite() = default;
 
-    Sprite(sf::Sprite value) : sprite(std::move(value)) {}
+    Sprite(::Sprite value) : sprite(std::move(value)) {}
 
     Sprite(const Sprite& other) = default;
     Sprite(Sprite&& other) noexcept = default;
     Sprite& operator=(const Sprite& other) = default;
     Sprite& operator=(Sprite&& other) noexcept = default;
 
-    sf::Sprite sprite;
+    ::Sprite sprite;
 };
 
 } // namespace comp

@@ -15,6 +15,7 @@ namespace entityx {
 class EntityX;
 }
 
+class AssetManager;
 class CameraController;
 class FrameRateCounter;
 class World;
@@ -40,6 +41,7 @@ private:
     sf::Font create_font_from_data(const std::vector<char>& data);
     void load_sprites();
 
+    std::unique_ptr<AssetManager> m_asset_manager;
     GameClock m_game_clock;
     sf::RenderWindow m_window;
     const std::string file_path = "Assets/Fonts/Inconsolata/Inconsolata.otf";
