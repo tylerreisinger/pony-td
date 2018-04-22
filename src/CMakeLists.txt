@@ -7,6 +7,9 @@ set(SOURCES
 
         ${CMAKE_CURRENT_SOURCE_DIR}/AI/AStar.cpp
 
+        ${CMAKE_CURRENT_SOURCE_DIR}/Data/AssetManager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Data/TextureLoader.cpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/System/PathMovementSystem.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Camera.cpp
@@ -33,6 +36,9 @@ set(HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/GameTime.h
 
         ${CMAKE_CURRENT_SOURCE_DIR}/AI/AStar.h
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/Data/AssetManager.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/Data/TextureLoader.h
 
         ${CMAKE_CURRENT_SOURCE_DIR}/Component/Position.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Component/Velocity.h
