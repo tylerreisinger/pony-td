@@ -11,7 +11,7 @@ Sprite::Sprite(std::shared_ptr<sf::Texture> texture, sf::IntRect rectangle)
 Sprite::Sprite(sf::Sprite raw_sprite, std::shared_ptr<sf::Texture> texture)
     : m_sprite(std::move(raw_sprite)),
       m_referenced_texture(std::move(texture)) {
-    assert(raw_sprite.getTexture() == *texture);
+    assert(raw_sprite.getTexture() == texture.get());
 }
 
 Sprite Sprite::load_from_file(const std::string& file_name, sf::IntRect rect) {
