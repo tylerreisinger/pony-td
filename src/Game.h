@@ -35,6 +35,8 @@ private:
     void update(const GameTime& time);
     void draw(const GameTime& time);
 
+    std::unique_ptr<entityx::EntityX> initialize_entityx();
+
     void draw_fps(const GameTime& time);
 
     std::vector<char> load_font_data(const std::string& file_path);
@@ -48,7 +50,6 @@ private:
     sf::Font m_font;
     Camera m_camera;
     FloorTileDirectory m_floor_directory;
-    std::unique_ptr<entityx::EntityX> m_ecs;
 
     std::unique_ptr<World> m_world;
     std::unique_ptr<WorldRenderer> m_world_renderer;

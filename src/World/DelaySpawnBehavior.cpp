@@ -12,13 +12,15 @@ DelaySpawnBehavior::DelaySpawnBehavior(
         Sprite sprite, std::chrono::duration<double> spawn_delay)
     : m_spawn_delay(spawn_delay), m_sprite(std::move(sprite)) {}
 
-void DelaySpawnBehavior::update(
-        World& world, entityx::EntityX& ecs, const GameTime& time) {
+void DelaySpawnBehavior::update(World& world,
+        entityx::EntityManager& entities,
+        entityx::Entity&,
+        const GameTime& time) {
     m_cur_delay += time.get_elapsed_game();
     if(m_cur_delay > m_spawn_delay) {
         m_cur_delay -= m_spawn_delay;
 
-        auto new_entity = ecs.entities.create();
+        auto new_entity = entities.create();
         new_entity.assign<comp::Position>(world.map_to_world_pos(
                 sf::Vector2<double>(m_parent->map_position()) +
                 sf::Vector2<double>{0.5, 0.5}));

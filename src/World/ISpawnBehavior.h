@@ -1,23 +1,19 @@
 #ifndef WORLD_ISPAWNBEHAVIOR_H
 #define WORLD_ISPAWNBEHAVIOR_H
 
+#include "AI/IBehavior.h"
+
 class SpawnPoint;
-class World;
-class GameTime;
 
 namespace entityx {
 class EntityX;
 }
 
-class ISpawnBehavior {
+class ISpawnBehavior : public IBehavior {
     friend class SpawnPoint;
-
 public:
     ISpawnBehavior() = default;
     virtual ~ISpawnBehavior() = default;
-
-    virtual void update(
-            World& world, entityx::EntityX& ecs, const GameTime& time) = 0;
 
 protected:
     virtual void set_parent(SpawnPoint* parent) = 0;

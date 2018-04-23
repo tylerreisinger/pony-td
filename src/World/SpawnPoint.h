@@ -6,6 +6,7 @@
 #include <random>
 
 #include <SFML/System/Vector2.hpp>
+#include <entityx/Entity.h>
 
 #include "AI/AStar.h"
 #include "ISpawnBehavior.h"
@@ -18,10 +19,9 @@ class GameTime;
 class World;
 
 class SpawnPoint {
+    friend class World;
+
 public:
-    SpawnPoint(World& world,
-            sf::Vector2<int> position,
-            std::unique_ptr<ISpawnBehavior> behavior);
     ~SpawnPoint() = default;
 
     SpawnPoint(const SpawnPoint& other) = delete;
@@ -33,8 +33,6 @@ public:
 
     const Path& path_to_goal() const;
 
-    void update(entityx::EntityX& ecs, const GameTime& time);
-
     template <typename Rng>
     sf::Vector2<double> get_spawn_location(Rng& rng) const {
         std::uniform_real_distribution<double> distribution(0.0, 1.0);
@@ -44,13 +42,18 @@ public:
         return sf::Vector2<double>(m_map_position.x + x, m_map_position.y + y);
     }
 
+    SpawnPoint(World& world,
+            entityx::Entity& entity,
+            sf::Vector2<int> position,
+            std::unique_ptr<ISpawnBehavior> behavior);
+
 private:
     std::optional<Path> compute_path_to_goal() const;
 
     World* m_world = nullptr;
+    entityx::Entity m_entity;
     sf::Vector2<int> m_map_position;
     Path m_path;
-    std::unique_ptr<ISpawnBehavior> m_behavior;
 };
 
 #endif

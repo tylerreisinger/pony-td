@@ -22,8 +22,10 @@ public:
     DelaySpawnBehavior& operator=(
             DelaySpawnBehavior&& other) noexcept = default;
 
-    virtual void update(
-            World& world, entityx::EntityX& ecs, const GameTime& time) override;
+    virtual void update(World& world,
+            entityx::EntityManager& manager,
+            entityx::Entity& entity,
+            const GameTime& time) override;
 
 protected:
     virtual void set_parent(SpawnPoint* parent) override;

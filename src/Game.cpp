@@ -14,8 +14,9 @@
 #include "Component/Position.h"
 #include "Component/Sprite.h"
 #include "Component/Velocity.h"
-#include "System/PathMovementSystem.h"
+#include "System/BehaviorSystem.h"
 #include "System/MovementSystem.h"
+#include "System/PathMovementSystem.h"
 #include "System/SpriteSystem.h"
 
 #include "World/CameraController.h"
@@ -77,6 +78,7 @@ void Game::initialize(sf::VideoMode window_mode) {
     m_floor_directory.add_tile(
             std::make_unique<FloorTileDefinition>(2, TileFlag::Movable));
 
+
     auto default_floor = FloorTile(&m_floor_directory[1]);
     auto default_tile = MapTile(std::move(default_floor));
 
@@ -92,7 +94,9 @@ void Game::initialize(sf::VideoMode window_mode) {
 
 
     m_world = std::make_unique<World>(8, 8, ts.tile_width(), ts.tile_height(), default_tile);
+    auto ecs = initialize_entityx();
 
+    m_world->set_entities(std::move(ecs));
 
     auto road_tile = FloorTile(&m_floor_directory[2]);
 
@@ -113,10 +117,13 @@ void Game::initialize(sf::VideoMode window_mode) {
     auto twi_sprite = Sprite(texture);
 
     m_world->add_target(Target(*m_world, sf::Vector2<int>{4, 7}));
-    m_world->add_spawn_point(std::make_unique<SpawnPoint>(*m_world,
+    /*m_world->add_spawn_point(std::make_unique<SpawnPoint>(*m_world,
             sf::Vector2<int>{1, 0},
             std::make_unique<DelaySpawnBehavior>(
-                    Sprite(texture), std::chrono::duration<double>(1.0))));
+                    Sprite(texture), std::chrono::duration<double>(1.0))));*/
+    m_world->make_spawn_point({96, 32},
+            std::make_unique<DelaySpawnBehavior>(
+                    Sprite(texture), std::chrono::duration<double>(1.0)));
 
     m_world_renderer = std::make_unique<WorldRenderer>(
             std::move(ts), m_window.getSize().x, m_window.getSize().y);
@@ -125,22 +132,14 @@ void Game::initialize(sf::VideoMode window_mode) {
                     m_world->height() * (ts.tile_height() / 2)));
     m_camera_controller = std::make_unique<CameraController>();
 
-    m_ecs = std::make_unique<entityx::EntityX>();
 
-    auto my_entity = m_ecs->entities.create();
-    my_entity.assign<comp::Position>(96, 32);
-    //my_entity.assign<comp::Velocity>(40.0, 40.0);
-    my_entity.assign<comp::PathMovement>(
-            m_world->spawn_points()[0]->path_to_goal().as_kind(
-                    CoordinateKind::WorldSpace, PathAnchor::Center, *m_world));
-    m_ecs->systems.add<sys::MovementSystem>();
-    m_ecs->systems.add<sys::SpriteSystem>(m_window, m_camera);
-    m_ecs->systems.add<sys::PathMovementSystem>(*m_world);
-    m_ecs->systems.configure();
-
-    auto e = m_ecs->entities.get(entityx::Entity::Id(0, 1));
-    e.assign<comp::Sprite>(std::move(twi_sprite));
-
+    // auto my_entity = ecs->entities.create();
+    // my_entity.assign<comp::Position>(96, 32);
+    // my_entity.assign<comp::Velocity>(40.0, 40.0);
+    // my_entity.assign<comp::PathMovement>(
+    //        m_world->spawn_points()[0]->path_to_goal().as_kind(
+    //                CoordinateKind::WorldSpace, PathAnchor::Center,
+    //                *m_world));
 
     load_sprites();
 
@@ -179,20 +178,16 @@ sf::Font Game::create_font_from_data(const std::vector<char>& data) {
 }
 
 void Game::update(const GameTime& time) {
-    for(auto& spawn : m_world->spawn_points()) {
-        spawn->update(*m_ecs, time);
-    }
-
-    m_ecs->systems.update<sys::MovementSystem>(time);
-    m_ecs->systems.update<sys::PathMovementSystem>(time);
+    m_world->update(time);
     m_camera_controller->update(time, m_camera, *m_world, *m_world_renderer);
 }
 
 void Game::draw(const GameTime& time) {
+    auto& ecs = m_world->get_ecs();
     m_window.clear();
 
     m_world_renderer->render(m_window, *m_world, m_camera);
-    m_ecs->systems.update<sys::SpriteSystem>(time);
+    ecs.systems.update<sys::SpriteSystem>(time);
     draw_fps(time);
 
     m_window.display();
@@ -208,4 +203,15 @@ void Game::draw_fps(const GameTime& time) {
     message.setCharacterSize(32);
 
     m_window.draw(message);
+}
+std::unique_ptr<entityx::EntityX> Game::initialize_entityx() {
+    auto ecs = std::make_unique<entityx::EntityX>();
+
+    ecs->systems.add<sys::BehaviorSystem>(*m_world);
+    ecs->systems.add<sys::MovementSystem>();
+    ecs->systems.add<sys::SpriteSystem>(m_window, m_camera);
+    ecs->systems.add<sys::PathMovementSystem>(*m_world);
+    ecs->systems.configure();
+
+    return ecs;
 }

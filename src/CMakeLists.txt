@@ -12,6 +12,7 @@ set(SOURCES
 
         ${CMAKE_CURRENT_SOURCE_DIR}/Graphics/Sprite.cpp
 
+        ${CMAKE_CURRENT_SOURCE_DIR}/System/BehaviorSystem.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/System/PathMovementSystem.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Camera.cpp
@@ -44,10 +45,12 @@ set(HEADERS
 
         ${CMAKE_CURRENT_SOURCE_DIR}/Graphics/Sprite.h
 
+        ${CMAKE_CURRENT_SOURCE_DIR}/Component/Behavior.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Component/Position.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Component/Velocity.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Component/Sprite.h
 
+        ${CMAKE_CURRENT_SOURCE_DIR}/System/BehaviorSystem.h
         ${CMAKE_CURRENT_SOURCE_DIR}/System/MovementSystem.h
         ${CMAKE_CURRENT_SOURCE_DIR}/System/PathMovementSystem.h
         ${CMAKE_CURRENT_SOURCE_DIR}/System/SpriteSystem.h

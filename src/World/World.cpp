@@ -1,10 +1,22 @@
 #include "World.h"
 
-World::World(int width, int height, int tile_width, int tile_height, const MapTile& default_tile)
-    : m_width(width), m_height(height), 
-      m_tile_width(tile_width), m_tile_height(tile_height),
-      m_grid(width * height, default_tile) 
-{}
+#include "Component/Behavior.h"
+#include "Component/Position.h"
+
+#include "System/BehaviorSystem.h"
+#include "System/MovementSystem.h"
+#include "System/PathMovementSystem.h"
+#include "System/SpriteSystem.h"
+
+World::World(int width,
+        int height,
+        int tile_width,
+        int tile_height,
+        const MapTile& default_tile,
+        std::unique_ptr<entityx::EntityX> ecs)
+    : m_width(width), m_height(height), m_tile_width(tile_width),
+      m_tile_height(tile_height), m_ecs(std::move(ecs)),
+      m_grid(width * height, default_tile) {}
 
 int World::width() const { return m_width; }
 
@@ -53,4 +65,22 @@ bool World::has_target(int x, int y) const {
         }
     }
     return false;
+}
+SpawnPoint& World::make_spawn_point(sf::Vector2<double> position,
+        std::unique_ptr<ISpawnBehavior> behavior) {
+    auto map_tile = sf::Vector2<int>(world_to_map_pos(position));
+    auto entity = m_ecs->entities.create();
+    entity.assign<comp::Position>(position);
+    auto spawn_point = std::make_unique<SpawnPoint>(
+            *this, entity, map_tile, std::move(behavior));
+    auto& ret = *spawn_point;
+
+    add_spawn_point(std::move(spawn_point));
+    return ret;
+}
+
+void World::update(const GameTime& time) {
+    m_ecs->systems.update<sys::BehaviorSystem>(time);
+    m_ecs->systems.update<sys::MovementSystem>(time);
+    m_ecs->systems.update<sys::PathMovementSystem>(time);
 }
