@@ -114,7 +114,11 @@ void Game::initialize(sf::VideoMode window_mode) {
 
     auto texture =
             m_asset_manager->load<sf::Texture>("Assets/Sprites/Twilight1.png");
+    auto rd_sprite = m_asset_manager->load<sf::Texture>(
+            "Assets/Sprites/RainbowDash1.png");
     auto twi_sprite = Sprite(texture);
+
+    m_world->create_tower(Sprite(rd_sprite), {3, 3});
 
     m_world->add_target(Target(*m_world, sf::Vector2<int>{4, 7}));
     /*m_world->add_spawn_point(std::make_unique<SpawnPoint>(*m_world,

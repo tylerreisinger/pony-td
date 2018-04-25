@@ -1,5 +1,7 @@
 #include "World.h"
 
+#include <cassert>
+
 #include "Component/Behavior.h"
 #include "Component/Position.h"
 
@@ -83,4 +85,18 @@ void World::update(const GameTime& time) {
     m_ecs->systems.update<sys::BehaviorSystem>(time);
     m_ecs->systems.update<sys::MovementSystem>(time);
     m_ecs->systems.update<sys::PathMovementSystem>(time);
+}
+
+Tower& World::create_tower(Sprite sprite, sf::Vector2<int> map_pos) {
+    assert(map_pos.x < width() && map_pos.y < height());
+    auto tower = std::make_unique<Tower>(*this, std::move(sprite), map_pos);
+    auto[iter, is_success] =
+            m_towers.insert(std::pair(map_pos, std::move(tower)));
+
+    if(!is_success) {
+        throw std::runtime_error(
+                "Tried to create a tower where one already exists!");
+    }
+
+    return *iter->second;
 }

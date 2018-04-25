@@ -10,6 +10,7 @@
 #include "GameTime.h"
 
 #include "Component/Position.h"
+#include "Component/Rotation.h"
 #include "Component/Sprite.h"
 
 namespace sys {
@@ -35,9 +36,15 @@ public:
                     auto p = (sf::Vector2<double>(m_window->getSize()) / 2.0)
                         - m_camera->look_at();
                     p += position.position;
-                    s->setPosition(p.x, p.y);
                     auto rect = s->getTextureRect();
                     s->setOrigin(rect.width / 2.0, rect.height / 2.0);
+                    if(entity.has_component<comp::Rotation>()) {
+                        auto rotation = entity.component<comp::Rotation>();
+                        auto angle = rotation->angle;
+
+                        s->setRotation(Deg<double>(angle).value);
+                    }
+                    s->setPosition(p.x, p.y);
                     m_window->draw(*s);
                 });
     }

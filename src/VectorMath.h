@@ -3,7 +3,22 @@
 
 #include <SFML/System/Vector2.hpp>
 #include <cmath>
+#include <cstdint>
+#include <functional>
 #include <type_traits>
+
+
+namespace std {
+template <>
+struct hash<sf::Vector2<int>> {
+    using result_type = std::uint64_t;
+    using argument_type = sf::Vector2<int>;
+
+    std::uint64_t operator()(const sf::Vector2<int>& val) const {
+        return val.x << sizeof(int) | val.y;
+    }
+};
+} // namespace std
 
 template <typename T>
 inline T magnitude(const sf::Vector2<T>& vec) {

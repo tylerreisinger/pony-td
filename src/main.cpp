@@ -10,6 +10,8 @@
 #include "Data/AssetManager.h"
 #include "Data/TextureLoader.h"
 
+#include "Angle.h"
+
 int main(int argc, char** argv) {
     Game game;
     game.run(sf::VideoMode(800, 600));

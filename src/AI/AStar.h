@@ -9,6 +9,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
+#include "VectorMath.h"
 #include "World/Path.h"
 
 
@@ -29,15 +30,7 @@ struct less<GraphNode> {
         return lhs.score < rhs.score;
     }
 };
-template <>
-struct hash<sf::Vector2<int>> {
-    size_t operator()(const sf::Vector2<int>& x) const {
-        return hash<uint64_t>()(x.x << sizeof(int) | x.y);
-    }
-};
 } // namespace std
-
-
 
 class AStar {
 public:

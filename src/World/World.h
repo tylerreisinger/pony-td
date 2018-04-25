@@ -3,16 +3,19 @@
 
 #include <cmath>
 #include <memory>
+#include <unordered_map>
 #include <vector>
 
 #include <entityx/quick.h>
 
 #include <SFML/System/Vector2.hpp>
 
+#include "Graphics/Sprite.h"
 #include "ISpawnBehavior.h"
 #include "MapTile.h"
 #include "SpawnPoint.h"
 #include "Target.h"
+#include "Tower.h"
 
 class GameTime;
 
@@ -33,6 +36,9 @@ public:
     World& operator=(World&& other) noexcept = delete;
     int width() const;
     int height() const;
+    sf::Vector2<int> world_dimensions() const {
+        return sf::Vector2<int>{m_width, m_height};
+    }
     int tile_width() const { return m_tile_width; }
     int tile_height() const { return m_tile_height; }
     sf::Vector2<int> tile_dimensions() const {
@@ -85,6 +91,8 @@ public:
 
     void update(const GameTime& time);
 
+    Tower& create_tower(Sprite sprite, sf::Vector2<int> map_pos);
+
 protected:
     int m_width;
     int m_height;
@@ -92,6 +100,8 @@ protected:
     int m_tile_height;
 
     std::unique_ptr<entityx::EntityX> m_ecs;
+
+    std::unordered_map<sf::Vector2<int>, std::unique_ptr<Tower>> m_towers;
 
     std::vector<MapTile> m_grid;
     std::vector<std::unique_ptr<SpawnPoint>> m_spawn_points;

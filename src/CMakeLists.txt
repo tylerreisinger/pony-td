@@ -25,6 +25,7 @@ set(SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Path.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/SpawnPoint.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Target.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/Tower.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileGraphic.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileSet.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/World.cpp
@@ -70,6 +71,7 @@ set(HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileGraphic.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileSet.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/TileProperties.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/Tower.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/World.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/WorldRenderer.h
 PARENT_SCOPE)
