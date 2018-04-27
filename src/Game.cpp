@@ -120,6 +120,11 @@ void Game::initialize(sf::VideoMode window_mode) {
 
     m_world->create_tower(Sprite(rd_sprite), {3, 3});
 
+    auto def = m_db.add_definition(
+            EnemyDefinition(Sprite(rd_sprite), "RainbowDash"));
+    def->build_enemy(*m_world, {50.0, 50.0});
+
+
     m_world->add_target(Target(*m_world, sf::Vector2<int>{4, 7}));
     /*m_world->add_spawn_point(std::make_unique<SpawnPoint>(*m_world,
             sf::Vector2<int>{1, 0},

@@ -8,6 +8,7 @@ set(SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/AI/AStar.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/Data/AssetManager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Data/EnemyDefinition.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Data/TextureLoader.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/Graphics/Sprite.cpp

@@ -11,6 +11,9 @@
 #include <memory>
 #include <thread>
 
+#include "Data/DefinitionDatabase.h"
+#include "Data/EnemyDefinition.h"
+
 namespace entityx {
 class EntityX;
 }
@@ -50,6 +53,8 @@ private:
     sf::Font m_font;
     Camera m_camera;
     FloorTileDirectory m_floor_directory;
+
+    DefinitionDatabase<EnemyDefinition> m_db;
 
     std::unique_ptr<World> m_world;
     std::unique_ptr<WorldRenderer> m_world_renderer;
