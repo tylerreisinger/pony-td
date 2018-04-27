@@ -54,3 +54,7 @@ std::optional<Path> SpawnPoint::compute_path_to_goal() const {
 const Path& SpawnPoint::path_to_goal() const {
     return m_path;
 }
+sf::Vector2<double> SpawnPoint::world_position() const {
+    return m_world->map_to_world_pos(
+            sf::Vector2<double>(m_map_position) + sf::Vector2{0.5, 0.5});
+}

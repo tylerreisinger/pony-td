@@ -6,6 +6,7 @@ set(SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/AI/AStar.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/AI/Targeting.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/Data/AssetManager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Data/EnemyDefinition.cpp
@@ -15,10 +16,12 @@ set(SOURCES
 
         ${CMAKE_CURRENT_SOURCE_DIR}/System/BehaviorSystem.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/System/PathMovementSystem.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/System/TowerFireSystem.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Camera.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/CameraController.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/DelaySpawnBehavior.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/Enemy.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTile.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTileDefinition.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTileDirectory.cpp
@@ -42,6 +45,7 @@ set(HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/GameTime.h
 
         ${CMAKE_CURRENT_SOURCE_DIR}/AI/AStar.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/AI/Targeting.h
 
         ${CMAKE_CURRENT_SOURCE_DIR}/Data/AssetManager.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Data/TextureLoader.h
@@ -57,10 +61,12 @@ set(HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/System/MovementSystem.h
         ${CMAKE_CURRENT_SOURCE_DIR}/System/PathMovementSystem.h
         ${CMAKE_CURRENT_SOURCE_DIR}/System/SpriteSystem.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/System/TowerFireSystem.h
 
         ${CMAKE_CURRENT_SOURCE_DIR}/World/Camera.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/CameraController.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/DelaySpawnBehavior.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/World/Enemy.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTile.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTileDefinition.h
         ${CMAKE_CURRENT_SOURCE_DIR}/World/FloorTileDirectory.h

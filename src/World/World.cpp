@@ -9,6 +9,7 @@
 #include "System/MovementSystem.h"
 #include "System/PathMovementSystem.h"
 #include "System/SpriteSystem.h"
+#include "System/TowerFireSystem.h"
 
 World::World(int width,
         int height,
@@ -85,6 +86,7 @@ void World::update(const GameTime& time) {
     m_ecs->systems.update<sys::BehaviorSystem>(time);
     m_ecs->systems.update<sys::MovementSystem>(time);
     m_ecs->systems.update<sys::PathMovementSystem>(time);
+    m_ecs->systems.update<sys::TowerFireSystem>(time);
 }
 
 Tower& World::create_tower(Sprite sprite, sf::Vector2<int> map_pos) {

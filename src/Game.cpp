@@ -18,6 +18,7 @@
 #include "System/MovementSystem.h"
 #include "System/PathMovementSystem.h"
 #include "System/SpriteSystem.h"
+#include "System/TowerFireSystem.h"
 
 #include "World/CameraController.h"
 #include "World/DelaySpawnBehavior.h"
@@ -122,7 +123,7 @@ void Game::initialize(sf::VideoMode window_mode) {
 
     auto def = m_db.add_definition(
             EnemyDefinition(Sprite(rd_sprite), "RainbowDash"));
-    def->build_enemy(*m_world, {50.0, 50.0});
+    auto enemy = Enemy(*m_world, def, {50.0, 50.0});
 
 
     m_world->add_target(Target(*m_world, sf::Vector2<int>{4, 7}));
@@ -132,7 +133,7 @@ void Game::initialize(sf::VideoMode window_mode) {
                     Sprite(texture), std::chrono::duration<double>(1.0))));*/
     m_world->make_spawn_point({96, 32},
             std::make_unique<DelaySpawnBehavior>(
-                    Sprite(texture), std::chrono::duration<double>(1.0)));
+                    Sprite(texture), std::chrono::duration<double>(1.0), m_db));
 
     m_world_renderer = std::make_unique<WorldRenderer>(
             std::move(ts), m_window.getSize().x, m_window.getSize().y);
@@ -220,6 +221,7 @@ std::unique_ptr<entityx::EntityX> Game::initialize_entityx() {
     ecs->systems.add<sys::MovementSystem>();
     ecs->systems.add<sys::SpriteSystem>(m_window, m_camera);
     ecs->systems.add<sys::PathMovementSystem>(*m_world);
+    ecs->systems.add<sys::TowerFireSystem>(*m_world);
     ecs->systems.configure();
 
     return ecs;

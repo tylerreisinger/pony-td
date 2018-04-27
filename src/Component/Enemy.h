@@ -11,7 +11,7 @@ public:
     Enemy() = default;
     ~Enemy() = default;
 
-    Enemy(DefinitionHandle<EnemyDefinition> definition)
+    Enemy(ConstDefinitionHandle<EnemyDefinition> definition)
         : definition(std::move(definition)) {}
 
     Enemy(const Enemy& other) = default;
@@ -19,7 +19,7 @@ public:
     Enemy& operator=(const Enemy& other) = default;
     Enemy& operator=(Enemy&& other) noexcept = default;
 
-    DefinitionHandle<EnemyDefinition> definition;
+    ConstDefinitionHandle<EnemyDefinition> definition;
 };
 
 } // namespace comp

@@ -5,8 +5,6 @@
 #include <memory>
 #include <vector>
 
-#include "EnemyDefinition.h"
-
 template <typename T, typename Container>
 class DefinitionHandle;
 
@@ -14,7 +12,9 @@ template <typename T>
 class DefinitionDatabase {
 public:
     using DefinitionId = typename T::DefinitionId;
-    using HandleType = DefinitionHandle<const T, const DefinitionDatabase<T>>;
+    using ConstHandleType =
+            DefinitionHandle<const T, const DefinitionDatabase<T>>;
+    using HandleType = DefinitionHandle<T, DefinitionDatabase<T>>;
 
     DefinitionDatabase() = default;
     ~DefinitionDatabase() = default;
@@ -25,7 +25,7 @@ public:
     DefinitionDatabase& operator=(
             DefinitionDatabase&& other) noexcept = default;
 
-    HandleType add_definition(EnemyDefinition definition) {
+    HandleType add_definition(T definition) {
         auto id = m_next_id++;
         definition.m_id = id;
         m_definitions.emplace_back(std::move(definition));
@@ -33,10 +33,16 @@ public:
     }
 
     const T& get(DefinitionId index) const { return m_definitions[index]; }
+    T& get(DefinitionId index) { return m_definitions[index]; }
 
-    HandleType operator[](DefinitionId index) const {
+    ConstHandleType operator[](DefinitionId index) const {
         assert(index < size());
-        return DefinitionHandle(index, *this);
+        return DefinitionHandle<const T, const DefinitionDatabase<T>>(
+                index, *this);
+    }
+    HandleType operator[](DefinitionId index) {
+        assert(index < size());
+        return DefinitionHandle<T, DefinitionDatabase<T>>(index, *this);
     }
 
     std::size_t size() const { return m_definitions.size(); }
@@ -61,6 +67,10 @@ public:
     DefinitionHandle(DefinitionHandle&& other) noexcept = default;
     DefinitionHandle& operator=(const DefinitionHandle& other) = default;
     DefinitionHandle& operator=(DefinitionHandle&& other) noexcept = default;
+
+    operator DefinitionHandle<const T, const Container>() const {
+        return DefinitionHandle<const T, const Container>(m_id, *m_container);
+    }
 
     bool operator==(const DefinitionHandle<T, Container>& rhs) const {
         return m_id == rhs.m_id && m_container == rhs.m_container;
@@ -90,6 +100,9 @@ private:
     Container* m_container;
     DefinitionId m_id;
 };
+
+template <typename T, typename Container = DefinitionDatabase<T>>
+using ConstDefinitionHandle = DefinitionHandle<const T, const Container>;
 
 
 template <typename T>

@@ -30,6 +30,7 @@ public:
     SpawnPoint& operator =(SpawnPoint&& other) noexcept = default;
 
     const sf::Vector2<int>& map_position() const;
+    sf::Vector2<double> world_position() const;
 
     const Path& path_to_goal() const;
 

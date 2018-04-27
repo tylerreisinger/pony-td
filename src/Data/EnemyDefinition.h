@@ -34,17 +34,14 @@ public:
 
     DefinitionId id() const { return m_id; }
 
-    Enemy build_enemy(World& world, const sf::Vector2<double>& position) const;
-
-
-    std::string m_name;
-    Sprite m_default_sprite;
-    double m_base_health = 1.0;
+    std::string name;
+    Sprite default_sprite;
+    double base_health = 1.0;
 
 private:
     EnemyDefinition(const EnemyDefinition& other)
-        : m_name(other.m_name), m_default_sprite(other.m_default_sprite),
-          m_base_health(other.m_base_health) {}
+        : name(other.name), default_sprite(other.default_sprite),
+          base_health(other.base_health) {}
 
     EnemyDefinition& operator=(const EnemyDefinition& other) = delete;
 

@@ -16,6 +16,7 @@ public:
     Target& operator=(Target&& other) noexcept = default;
 
     const sf::Vector2<int>& map_position() const;
+    sf::Vector2<double> world_position() const;
 
 private:
     World* m_world = nullptr;

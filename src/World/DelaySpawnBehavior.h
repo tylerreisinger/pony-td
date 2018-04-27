@@ -4,6 +4,8 @@
 
 #include <chrono>
 
+#include "Data/DefinitionDatabase.h"
+#include "Data/EnemyDefinition.h"
 #include "Graphics/Sprite.h"
 
 class SpawnPoint;
@@ -12,8 +14,9 @@ class DelaySpawnBehavior : public ISpawnBehavior {
     friend class SpawnPoint;
 
 public:
-    DelaySpawnBehavior(
-            Sprite sprite, std::chrono::duration<double> spawn_delay);
+    DelaySpawnBehavior(Sprite sprite,
+            std::chrono::duration<double> spawn_delay,
+            const DefinitionDatabase<EnemyDefinition>& enemy_db);
     virtual ~DelaySpawnBehavior() = default;
 
     DelaySpawnBehavior(const DelaySpawnBehavior& other) = delete;
@@ -36,6 +39,7 @@ private:
             std::chrono::duration<double>(0.0);
     Sprite m_sprite;
     SpawnPoint* m_parent = nullptr;
+    const DefinitionDatabase<EnemyDefinition>* m_enemy_db = nullptr;
 };
 
 #endif
